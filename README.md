@@ -1,9 +1,8 @@
-
 # Task Management App
+
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
 
 A simple application to organize tasks with possibility of having several lists.
-
 
 ## Tech Stack
 
@@ -17,21 +16,17 @@ A simple application to organize tasks with possibility of having several lists.
 <a href="https://trpc.io/" target="_blank" rel="noreferrer"><img src="https://trpc.io/img/logo-no-text.svg" alt="tRPC" height="36"/></a>
 </p>
 
-
 ## Demo
 
 The application is live at the following address:
 
 https://task-management-app-orcin.vercel.app/
 
+You can also try it on sandbox:
 
-You can also try it on sandbox: 
-*Note: You still need Environment Variables*
+_Note: You still need Environment Variables_
 
 [![Edit elegant-cache-w5cczp](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/elegant-cache-w5cczp?fontsize=14&hidenavigation=1&theme=dark)
-
-
-
 
 ## Run Locally
 
@@ -49,9 +44,9 @@ Go to the project directory
 
 Install dependencies
 
-___NOTE:___ The default package manager for this project is `pnpm`
+**_NOTE:_** The default package manager for this project is `pnpm`
 
-*If you wish to use a different package manager make sure to ***remove*** the `preinstall` script from the `package.json`.*
+\*If you wish to use a different package manager make sure to **_remove_** the `preinstall` script from the `package.json`.\*
 
 ```bash
   pnpm install
@@ -74,10 +69,3 @@ Start dev server
 ```bash
   pnpm dev
 ```
-
-
-
-
-
-
-
