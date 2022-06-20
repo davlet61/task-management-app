@@ -1,16 +1,15 @@
+import useStore from 'store';
 import { Task, HandleDelAndStatusFn } from '../types';
-import { useAppDispatch } from '../../redux/hooks/typedHooks';
-import { markComplete, deleteTodo } from '../../redux/slice/todosSlice';
 
 const TodoItem = ({ todo }: { todo: Task }) => {
-  const dispatch = useAppDispatch();
+  const store = useStore((state) => state);
 
-  dispatch(markComplete(id));
   const handleCompleted: HandleDelAndStatusFn = (id) => {
+    store.markComplete(id);
   };
 
   const handleDelete: HandleDelAndStatusFn = (id) => {
-    dispatch(deleteTodo(id));
+    store.deleteTodo(id);
   };
 
   return (
@@ -21,6 +20,7 @@ const TodoItem = ({ todo }: { todo: Task }) => {
       onClick={(e) => handleCompleted(todo.id)}
     >
       <button
+        type="button"
         onClick={(e) => {
           e.stopPropagation();
           handleDelete(todo.id);

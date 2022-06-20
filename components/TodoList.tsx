@@ -1,7 +1,8 @@
 import TodoItem from '@components/TodoItem';
+import useStore from 'store';
 
 const TodoList = () => {
-  const { todos } = useAppSelector((state) => state);
+  const { todos } = useStore((state) => state);
 
   if (!todos || todos.length === 0) {
     return (

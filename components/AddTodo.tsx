@@ -1,28 +1,19 @@
-import { useState } from 'react';
-import { v4 } from 'uuid';
-import { Task, HandleChangeFn, HandleSubmitFn } from '../types';
+import { nanoid } from 'nanoid';
+import useStore from 'store';
+import { HandleChangeFn, HandleSubmitFn } from '../types';
 
 const AddTodo = () => {
-  const initialState: Task = {
-    id: '',
-    title: '',
-    description: '',
-    completed: false,
-  };
-  const [todo, setTodo] = useState<Task>(initialState);
-  const dispatch = useAppDispatch();
+  const store = useStore((state) => state);
+  const { newTodo } = store;
 
   const handleChange: HandleChangeFn = (e) => {
     const { value, name } = e.target;
-    setTodo({ ...todo, id: v4(), [name]: value });
+    store.setNewTodo({ ...newTodo, id: nanoid(), [name]: value });
   };
 
   const handleSubmit: HandleSubmitFn = (e) => {
     e.preventDefault();
-    if (todo !== initialState) {
-      dispatch(addTodo(todo));
-    }
-    setTodo(initialState);
+    store.addTodo();
   };
 
   return (
@@ -36,7 +27,7 @@ const AddTodo = () => {
           type="text"
           name="title"
           placeholder="Task title ..."
-          value={todo.title}
+          value={newTodo.title}
           onChange={handleChange}
           required
         />
@@ -46,7 +37,7 @@ const AddTodo = () => {
           id="add-description"
           name="description"
           placeholder="Short description of the task"
-          value={todo.description}
+          value={newTodo.description}
           onChange={handleChange}
         />
         <button id="btnAddTodo" className="add__submit" type="submit">

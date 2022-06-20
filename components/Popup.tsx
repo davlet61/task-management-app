@@ -1,25 +1,20 @@
 import { ReactNode } from 'react';
 
 const Popup = ({ children }: { children: ReactNode }) => {
-  const { visibility } = useAppSelector((state) => state);
-  const dispatch = useAppDispatch();
-
   const handleClearStorage = () => {
-    dispatch(show());
     localStorage.clear();
-    dispatch(clearState());
   };
 
   return (
     <div
-      style={{
-        visibility: visibility === true ? 'visible' : 'hidden',
-        opacity: visibility === true ? '1' : '0',
-      }}
+      // style={{
+      //   visibility: visibility === true ? 'visible' : 'hidden',
+      //   opacity: visibility === true ? '1' : '0',
+      // }}
       className="overlay"
     >
       <div className="popup">
-        <span className="popup__close" onClick={() => dispatch(show())}>
+        <span className="popup__close">
           &times;
         </span>
         <div className="popup__content">{children}</div>
