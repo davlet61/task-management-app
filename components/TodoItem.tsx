@@ -1,29 +1,29 @@
 import useStore from 'store';
-import { Task, HandleDelAndStatusFn } from '../types';
+import { Task } from '../types';
 
-const TodoItem = ({ todo }: { todo: Task }) => {
+interface ITodoItemProps {
+  todo: Task;
+}
+const TodoItem = ({ todo }: ITodoItemProps) => {
   const store = useStore((state) => state);
-
-  const handleCompleted: HandleDelAndStatusFn = (id) => {
-    store.markComplete(id);
-  };
-
-  const handleDelete: HandleDelAndStatusFn = (id) => {
-    store.deleteTodo(id);
-  };
 
   return (
     <article
       data-testid="toggleComplete"
       className={`todo todo--toggle-completed ${todo.completed ? 'todo--completed' : ''
         }`}
-      onClick={(e) => handleCompleted(todo.id)}
+      onClick={() => store.markComplete(todo.id)}
+      onKeyDown={(e) => {
+        if (e.key === 'Spacebar') {
+          store.markComplete(todo.id);
+        }
+      }}
     >
       <button
         type="button"
         onClick={(e) => {
           e.stopPropagation();
-          handleDelete(todo.id);
+          store.deleteTodo(todo.id);
         }}
         className="todo__button--remove"
         data-testid="removeBtn"

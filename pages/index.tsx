@@ -1,8 +1,8 @@
+import type { NextPage } from 'next';
+import useStore from 'store';
 import AddTodo from '@components/AddTodo';
 import Popup from '@components/Popup';
 import TodoList from '@components/TodoList';
-import type { NextPage } from 'next';
-import useStore from 'store';
 
 const Home: NextPage = () => {
   const { todos } = useStore((state) => state);

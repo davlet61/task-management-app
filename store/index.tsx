@@ -1,6 +1,6 @@
 import create from 'zustand';
 import { nanoid } from 'nanoid';
-import { Task } from '../types';
+import { Store, Task } from '../types';
 
 const updateTodo = (todos: Task[], todo: Task): Task[] => todos
   .map((t) => (t.id === todo.id ? todo : t));
@@ -28,20 +28,10 @@ const initialState: Task = {
   completed: false,
 };
 
-type Store = {
-  todos: Task[];
-  newTodo: Task;
-  setTodos: (todos: Task[]) => void;
-  addTodo: () => void;
-  updateTodo: (todo: Task) => void;
-  markComplete: (id: string) => void;
-  deleteTodo: (id: string) => void;
-  setNewTodo: (newTodo: Task) => void;
-};
-
 const useStore = create<Store>(
   (set): Store => ({
     todos: [],
+    visibility: true,
     newTodo: initialState,
     setTodos: (todos: Task[]) => set((state) => ({
       ...state,
@@ -67,6 +57,10 @@ const useStore = create<Store>(
       ...state,
       todos: addTodo(state.todos, state.newTodo),
       newTodo: initialState,
+    })),
+    setVisibility: () => set((state) => ({
+      ...state,
+      visibility: !state.visibility,
     })),
   }),
 );
