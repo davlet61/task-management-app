@@ -29,7 +29,8 @@
         "namedComponents": "arrow-function",
         "unnamedComponents": ["function-expression", "arrow-function"]
       }
-    ]
+    ],
+    "react/jsx-props-no-spreading": [0, { "html": "ignore" }]
   },
   "ignorePatterns": [
     ".eslintrc.json",
