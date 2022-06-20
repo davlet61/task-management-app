@@ -160,7 +160,7 @@ const Todos = ({ id }: { id?: string }) => {
               if (query.id?.includes('done')) {
                 return task.completed;
               }
-              return task;
+              return true;
             })
               .map((task) => (
                 <TodoItem key={task.id} todo={task} />

@@ -31,7 +31,6 @@ export const getServerSideProps = async (
   });
   const id = context.params?.id as string;
 
-  // await ssg.fetchQuery('project.ids');
   const single = await ssg.fetchQuery('project.single', { id: id[0] });
 
   return {
