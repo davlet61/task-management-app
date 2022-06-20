@@ -30,7 +30,8 @@
         "unnamedComponents": ["function-expression", "arrow-function"]
       }
     ],
-    "react/jsx-props-no-spreading": [0, { "html": "ignore" }]
+    "react/jsx-props-no-spreading": [0, { "html": "ignore" }],
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
   },
   "ignorePatterns": [
     ".eslintrc.json",
