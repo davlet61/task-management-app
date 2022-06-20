@@ -30,7 +30,7 @@ const Layout = ({
         navigationData={navigationData}
       />
       <main
-        className="h-[calc(100vh-5rem)]"
+        className="h-[calc(100vh-5rem)] mb-32 md:mb-1"
         onPointerMove={(event) => updateMyPresence({
           cursor: {
             x: Math.round(event.clientX),
