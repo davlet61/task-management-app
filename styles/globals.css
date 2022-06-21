@@ -6,18 +6,27 @@
 .btn-black {
   @apply border border-black bg-black text-white font-bold py-2 px-4 rounded text-center;
 }
+
 .btn-black:hover {
   @apply transition duration-150 bg-white text-black;
 }
+
 .btn-black-outline {
   @apply border border-black text-black py-2 px-4 rounded font-bold text-center;
 }
+
 .btn-black-outline:hover {
   @apply transition duration-150 bg-black text-white;
 }
 
 .display-flex {
   @apply flex gap-1 justify-center items-center p-2;
+}
+
+@layer components {
+  .list-plus {
+    list-style-type: '+ ';
+  }
 }
 
 /* GLOBAL RESET */
@@ -45,14 +54,10 @@ blockquote,
 form,
 ul,
 ol,
-dl {
-  margin: 20px 0;
-}
+dl,
 li,
 dd,
-blockquote {
-  margin-left: 40px;
-}
+blockquote,
 table {
   border-collapse: collapse;
   border-spacing: 0;
