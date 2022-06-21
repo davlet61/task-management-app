@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import useStore from 'store';
+import useStore from '@store/.';
 
 const Popup = ({ children }: { children: ReactNode }) => {
   const { visibility, setVisibility } = useStore((state) => state);

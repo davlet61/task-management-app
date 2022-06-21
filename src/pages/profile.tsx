@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import type { NextPage } from 'next';
 import { supabase } from '@lib/supabaseConfig';
 import type { Session } from '@supabase/supabase-js';
-import Auth from '../components/Auth';
-import Account from '../components/Account';
+import Account from '@components/Account';
+import Auth from '@components/Auth';
 
 const Profile: NextPage = () => {
   const [session, setSession] = useState<Session | null>(null);

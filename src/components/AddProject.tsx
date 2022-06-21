@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
 import { supabase } from '@lib/supabaseConfig';
-import useStore from 'store';
+import useStore from '@store/.';
+import React, { useRef } from 'react';
 
 const AddProject = () => {
   const detailsRef = useRef<HTMLDetailsElement | null>(null);

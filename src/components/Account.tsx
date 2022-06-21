@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '@lib/supabaseConfig';
 import { Session } from '@supabase/supabase-js';
+import { supabase } from '@lib/supabaseConfig';
 
 interface IAccountProps {
   session: Session;
