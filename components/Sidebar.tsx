@@ -1,7 +1,7 @@
 import AddProject from './AddProject';
 
 const Sidebar = () => (
-  <aside className="w-60 h-full shadow-md bg-white px-1 absolute">
+  <aside className="w-60 h-full shadow-md bg-white px-1 fixed">
     <ul className="relative">
       <li className="relative">
         <AddProject />

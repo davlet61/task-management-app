@@ -15,7 +15,7 @@ const Popup = ({ children }: { children: ReactNode }) => {
         visibility: visibility === true ? 'visible' : 'hidden',
         opacity: visibility === true ? '1' : '0',
       }}
-      className="overlay"
+      className="flex justify-center ml-60"
     >
       <div className="popup">
         <span className="popup__close">
@@ -23,7 +23,7 @@ const Popup = ({ children }: { children: ReactNode }) => {
         </span>
         <div className="popup__content">{children}</div>
         <button
-          className="button--popup"
+          className="btn-black uppercase "
           type="submit"
           onClick={handleClearStorage}
         >
