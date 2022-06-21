@@ -3,13 +3,17 @@ import useStore from 'store';
 import AddTodo from '@components/AddTodo';
 import Popup from '@components/Popup';
 import TodoList from '@components/TodoList';
+import AddProject from '@components/AddProject';
 
 const Home: NextPage = () => {
   const { todos } = useStore((state) => state);
 
   return (
-    <>
-      <h1 className="container__title">Things I have to do...</h1>
+    <div
+      style={{ minWidth: 250, maxWidth: 600, margin: 'auto' }}
+      className="w-full h-full flex flex-col justify-center items-center p-4"
+    >
+      <AddProject />
       <AddTodo />
       <TodoList />
       <Popup>
@@ -23,7 +27,7 @@ const Home: NextPage = () => {
       >
         Clear list
       </button>
-    </>
+    </div>
   );
 };
 
