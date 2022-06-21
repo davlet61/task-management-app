@@ -25,10 +25,7 @@ const Sidebar = () => {
   }, [setVisibility, visibility]);
 
   const projects = trpc.useQuery(['project.all']);
-  const singleProject = trpc.useQuery(['project.single', { id: '1ce88c26-9e9a-44ea-b5e2-9ea6f8f1fb07' }], {
-    staleTime: 30000,
-  });
-  if (!projects.data || !singleProject.data) {
+  if (!projects.data) {
     return null;
   }
 
@@ -58,7 +55,7 @@ const Sidebar = () => {
             className="relative mt-4 flex gap-2 px-4 py-1 rounded items-center text-slate-700 hover:bg-neutral-200 transition-all duration-300 ease-in-out cursor-pointer active:bg-neutral-300"
           >
             <Inbox />
-            <p>{singleProject.data.name}</p>
+            <p>Inbox</p>
           </div>
         </li>
       </ul>
