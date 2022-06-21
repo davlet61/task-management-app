@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid';
 import useStore from 'store';
 import { HandleChangeFn, HandleSubmitFn } from '../types';
 
@@ -8,7 +7,7 @@ const AddTodo = () => {
 
   const handleChange: HandleChangeFn = (e) => {
     const { value, name } = e.target;
-    store.setNewTodo({ ...newTodo, id: nanoid(), [name]: value });
+    store.setNewTodo({ ...newTodo, [name]: value });
   };
 
   const handleSubmit: HandleSubmitFn = (e) => {
