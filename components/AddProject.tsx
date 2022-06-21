@@ -1,19 +1,19 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { supabase } from '@lib/supabaseConfig';
+import useStore from 'store';
 
 const AddProject = () => {
-  const [projects, setProjects] = useState([]);
   const detailsRef = useRef<HTMLDetailsElement | null>(null);
-  const [projectName, setProjectName] = useState('');
+  const store = useStore((state) => state);
+  const { newProject } = store;
 
-  const addProject = () => projectName
+  const addProject = () => newProject.name
     && supabase.from('projects').insert({
-      name: projectName,
+      name: newProject.name,
       user_id: supabase.auth.user()?.id,
     })
       .then(() => {
-        setProjects([...projects]);
-        setProjectName('');
+        store.addProject();
       });
 
   const handleCancel = (e: React.KeyboardEvent | React.MouseEvent) => {
@@ -35,8 +35,8 @@ const AddProject = () => {
         data-testid="add-project-inner"
       >
         <input
-          value={projectName}
-          onChange={(e) => setProjectName(e.target.value)}
+          value={newProject.name}
+          onChange={(e) => store.setNewProject({ ...newProject, name: e.target.value })}
           className=":placeholder-gray-500 p-2 w-11/12 outline-none border-2 border-solid border-gray-400 rounded"
           data-testid="project-name"
           type="text"

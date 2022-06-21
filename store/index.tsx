@@ -1,6 +1,6 @@
 import create from 'zustand';
 import { nanoid } from 'nanoid';
-import { Store, Task } from '../types';
+import { Project, Store, Task } from '../types';
 
 const updateTodo = (todos: Task[], todo: Task): Task[] => todos
   .map((t) => (t.id === todo.id ? todo : t));
@@ -21,6 +21,13 @@ const addTodo = (todos: Task[], todo: Task): Task[] => [
   },
 ];
 
+const addProject = (projects: Project[], project: Project): Project[] => [
+  ...projects,
+  {
+    ...project,
+  },
+];
+
 const initialState: Task = {
   id: '',
   title: '',
@@ -28,11 +35,19 @@ const initialState: Task = {
   completed: false,
 };
 
+const initialProject: Project = {
+  id: '',
+  user_id: '',
+  name: '',
+};
+
 const useStore = create<Store>(
   (set): Store => ({
     todos: [],
-    visibility: true,
+    projects: [],
     newTodo: initialState,
+    newProject: initialProject,
+    visibility: true,
     setTodos: (todos: Task[]) => set((state) => ({
       ...state,
       todos,
@@ -61,6 +76,15 @@ const useStore = create<Store>(
     setVisibility: () => set((state) => ({
       ...state,
       visibility: !state.visibility,
+    })),
+    setNewProject: (newProject: Project) => set((state) => ({
+      ...state,
+      newProject,
+    })),
+    addProject: () => set((state) => ({
+      ...state,
+      projects: addProject(state.projects, state.newProject),
+      newProject: initialProject,
     })),
   }),
 );

@@ -1,3 +1,9 @@
+export interface Project {
+  id: string;
+  user_id: string;
+  name: string;
+}
+
 export interface Task {
   id: string;
   title: string;
@@ -7,7 +13,9 @@ export interface Task {
 
 export type Store = {
   todos: Task[];
+  projects: Project[];
   newTodo: Task;
+  newProject: Project;
   visibility: boolean;
   setTodos: (todos: Task[]) => void;
   addTodo: () => void;
@@ -16,6 +24,8 @@ export type Store = {
   deleteTodo: (id: string) => void;
   setNewTodo: (newTodo: Task) => void;
   setVisibility: () => void;
+  setNewProject: (project: Project) => void;
+  addProject: () => void;
 };
 
 export type AddTodoFn = (item: Task) => void;
