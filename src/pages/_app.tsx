@@ -4,9 +4,10 @@ import type { AppRouter } from '@pages/api/trpc/[trpc]';
 import { ClickToComponent } from 'click-to-react-component';
 import Loading from '@components/Loading';
 import { transformer } from '@utils/trpc';
-import { VisibilityProvider } from 'context';
+import { VisibilityProvider, client } from 'context';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { LiveblocksProvider, RoomProvider } from '@liveblocks/react';
 import '../styles/globals.css';
 
 const MyApp: AppType = ({ Component, pageProps }) => {
@@ -28,10 +29,14 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   return loading ? (
     <Loading />
   ) : (
-    <VisibilityProvider>
-      <ClickToComponent />
-      <Component {...pageProps} />
-    </VisibilityProvider>
+    <LiveblocksProvider client={client}>
+      <RoomProvider id="react-todo-app">
+        <VisibilityProvider>
+          <ClickToComponent />
+          <Component {...pageProps} />
+        </VisibilityProvider>
+      </RoomProvider>
+    </LiveblocksProvider>
   );
 };
 

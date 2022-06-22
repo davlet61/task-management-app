@@ -1,6 +1,7 @@
 import {
   useState, createContext, useMemo, SetStateAction, Dispatch,
 } from 'react';
+import { createClient } from '@liveblocks/client';
 
 type VisibilityContextType = (boolean | Dispatch<SetStateAction<boolean>>)[];
 
@@ -17,3 +18,7 @@ export const VisibilityProvider = ({ children }: { children: React.ReactNode }) 
     </VisibilityContext.Provider>
   );
 };
+
+export const client = createClient({
+  publicApiKey: 'pk_live_xxxxxxxxxxxxxxxxxxxxxxxx',
+});
