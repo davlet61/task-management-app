@@ -1,17 +1,17 @@
 import { prisma } from '@client/.';
-import { appRouter } from '@routers/.';
-import * as trpc from '@trpc/server';
+import superjson from 'superjson';
+import projectRouter from '@routers/project';
+import todoRouter from '@routers/todo';
 import * as trpcNext from '@trpc/server/adapters/next';
+import createRouter from '@utils/createRouter';
+import { createContext } from '@utils/context';
 
-export const createContext = async (
-  opts?: trpcNext.CreateNextContextOptions,
-) => ({
-  req: opts?.req,
-  prisma,
-  projects: prisma.projects,
-  todos: prisma.todos,
-});
-export type Context = trpc.inferAsyncReturnType<typeof createContext>;
+export const appRouter = createRouter()
+  .transformer(superjson)
+  .merge('project.', projectRouter)
+  .merge('todo.', todoRouter);
+
+export type AppRouter = typeof appRouter;
 
 export default trpcNext.createNextApiHandler({
   router: appRouter,

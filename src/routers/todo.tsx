@@ -1,9 +1,7 @@
-import type { Context } from '@pages/api/trpc/[trpc]';
-import * as trpc from '@trpc/server';
 import { z } from 'zod';
+import createRouter from '@utils/createRouter';
 
-export const appRouter = trpc
-  .router<Context>()
+const todoRouter = createRouter()
   .query('all', {
     async resolve({ ctx }) {
       const projects = await ctx.projects.findMany({
@@ -13,6 +11,7 @@ export const appRouter = trpc
         select: {
           name: true,
           user_id: true,
+          todos: true,
         },
       });
       return projects;
@@ -24,17 +23,14 @@ export const appRouter = trpc
       name: z.string(),
     }),
     async resolve({ ctx, input }) {
-      try {
-        await ctx.projects.create({
-          data: {
-            name: input.name,
-            user_id: input.user_id,
-          },
-        });
-      } catch (e) {
-        console.log(e);
-      }
+      const project = await ctx.projects.create({
+        data: {
+          name: input.name,
+          user_id: input.user_id,
+        },
+      });
+      return project;
     },
   });
 
-export type AppRouter = typeof appRouter;
+export default todoRouter;
