@@ -4,17 +4,19 @@ import createRouter from '@utils/createRouter';
 const todoRouter = createRouter()
   .query('all', {
     async resolve({ ctx }) {
-      const projects = await ctx.projects.findMany({
+      const todos = await ctx.todos.findMany({
         orderBy: {
           created_at: 'desc',
         },
         select: {
-          name: true,
-          user_id: true,
-          todos: true,
+          title: true,
+          project_id: true,
+          description: true,
+          created_at: true,
+          completed: true,
         },
       });
-      return projects;
+      return todos;
     },
   })
   .mutation('add-project', {

@@ -31,5 +31,6 @@ model todos {
   title       String?
   description String?
   project_id  BigInt?
+  completed   Boolean?  @default(false)
   projects    projects? @relation(fields: [project_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
