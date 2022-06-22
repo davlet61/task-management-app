@@ -1,4 +1,4 @@
-import { prisma } from '@client/.';
+import prisma from 'db';
 import superjson from 'superjson';
 import projectRouter from '@routers/project';
 import todoRouter from '@routers/todo';

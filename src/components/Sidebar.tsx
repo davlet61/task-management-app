@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid';
 import AddProject from './AddProject';
 
 const Sidebar = () => {
-  const projects = trpc.useQuery(['all'], {
+  const projects = trpc.useQuery(['project.all'], {
     staleTime: 3000,
   });
   if (!projects.data) {

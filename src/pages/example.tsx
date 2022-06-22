@@ -1,10 +1,10 @@
-import { supabase } from '@lib/supabaseConfig';
+import supabase from '@lib/supabaseConfig';
 import { trpc } from '../utils/trpc';
 
 const ExamplePage = () => {
   const user = supabase.auth.user();
   if (user) {
-    const userData = trpc.useQuery(['all']);
+    const userData = trpc.useQuery(['project.all']);
     const updatedData = JSON.stringify(
       userData.data,
       (_key, value) => (typeof value === 'bigint' ? value.toString() : value),

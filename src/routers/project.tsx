@@ -17,7 +17,7 @@ const projectRouter = createRouter()
       return projects;
     },
   })
-  .mutation('add-project', {
+  .mutation('add', {
     input: z.object({
       user_id: z.string(),
       name: z.string(),

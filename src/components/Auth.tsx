@@ -1,4 +1,4 @@
-import { supabase } from '@lib/supabaseConfig';
+import supabase from '@lib/supabaseConfig';
 import React, { useState } from 'react';
 
 const Auth = () => {

@@ -1,16 +1,33 @@
-import { supabase } from '@lib/supabaseConfig';
+import supabase from '@lib/supabaseConfig';
 import useStore from '@store/.';
 import { User } from '@supabase/supabase-js';
 import React, { useRef } from 'react';
-import { trpc } from '../utils/trpc';
+import { trpc } from '@utils/trpc';
 
 const AddProject = () => {
   const detailsRef = useRef<HTMLDetailsElement | null>(null);
   const store = useStore((state) => state);
   const { newProject } = store;
+  const allProjects = trpc.useQuery(['project.all']);
 
-  const addNewProject = trpc.useMutation(['add-project']);
-
+  const utils = trpc.useContext();
+  const addNewProject = trpc.useMutation('project.add', {
+    async onMutate({ name, user_id }) {
+      await utils.cancelQuery(['project.all']);
+      const projects = allProjects.data ?? [];
+      utils.setQueryData(
+        ['project.all'],
+        [
+          ...projects,
+          {
+            user_id,
+            name,
+            todos: [],
+          },
+        ],
+      );
+    },
+  });
   const addProject = () => {
     const user = supabase.auth.user() as User;
     addNewProject

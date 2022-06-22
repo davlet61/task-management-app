@@ -23,7 +23,6 @@
       "@public/*": ["public/*"],
       "@store/*": ["store/*"],
       "@utils/*": ["utils/*"],
-      "@client/*": ["client/*"],
       "@routers/*": ["routers/*"]
     }
   },

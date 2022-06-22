@@ -12,7 +12,7 @@ import {
 import { useIsMutating } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { inferQueryOutput, trpc } from '@utils/trpc';
-import { createContext, appRouter } from '@pages/api/trpc/[trpc]';
+import { appRouter } from '@pages/api/trpc/[trpc]';
 import Image from 'next/image';
 
 type Task = inferQueryOutput<'todo.all'>[number];
