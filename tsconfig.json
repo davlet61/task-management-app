@@ -21,9 +21,11 @@
       "@lib/*": ["lib/*"],
       "@hooks/*": ["hooks/*"],
       "@public/*": ["public/*"],
-      "@store/*": ["store/*"]
+      "@store/*": ["store/*"],
+      "@utils/*": ["utils/*"],
+      "@client/*": ["client/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/example"],
   "exclude": ["node_modules"]
 }

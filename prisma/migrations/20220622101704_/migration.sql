@@ -12,9 +12,9 @@ CREATE TABLE "profiles" (
 -- CreateTable
 CREATE TABLE "projects" (
     "id" BIGSERIAL NOT NULL,
-    "user_id" UUID,
-    "name" TEXT,
     "created_at" TIMESTAMPTZ(6) DEFAULT CURRENT_TIMESTAMP,
+    "name" TEXT,
+    "user_id" UUID,
 
     CONSTRAINT "projects_pkey" PRIMARY KEY ("id")
 );
@@ -22,11 +22,10 @@ CREATE TABLE "projects" (
 -- CreateTable
 CREATE TABLE "todos" (
     "id" BIGSERIAL NOT NULL,
-    "project_id" BIGINT,
-    "title" TEXT,
     "created_at" TIMESTAMPTZ(6) DEFAULT CURRENT_TIMESTAMP,
+    "title" TEXT,
     "description" TEXT,
-    "is_complete" BOOLEAN,
+    "project_id" BIGINT,
 
     CONSTRAINT "todos_pkey" PRIMARY KEY ("id")
 );

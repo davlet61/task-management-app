@@ -3,7 +3,7 @@ import { Session } from '@supabase/supabase-js';
 import { supabase } from '@lib/supabaseConfig';
 
 interface IAccountProps {
-  session: Session;
+  session: any;
 }
 
 const Account = ({ session }: IAccountProps) => {
@@ -15,12 +15,9 @@ const Account = ({ session }: IAccountProps) => {
   const getProfile = async () => {
     try {
       setLoading(true);
-      const user = supabase.auth.user();
-
       const { data, error, status } = await supabase
         .from('profiles')
-        .select('username, website, avatar_url')
-        .eq('id', user.id)
+        .select('id, username, avatar_url, website')
         .single();
 
       if (error && status !== 406) {
@@ -34,7 +31,7 @@ const Account = ({ session }: IAccountProps) => {
       }
     } catch (error: unknown) {
       if (error instanceof Error) {
-        alert(error.message);
+        console.error(error);
       }
     } finally {
       setLoading(false);
@@ -51,7 +48,7 @@ const Account = ({ session }: IAccountProps) => {
       const user = supabase.auth.user();
 
       const updates = {
-        id: user.id,
+        id: user?.id,
         username,
         website,
         avatar_url,
