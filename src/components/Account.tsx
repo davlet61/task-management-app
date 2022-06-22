@@ -3,14 +3,19 @@ import { Session } from '@supabase/supabase-js';
 import { supabase } from '@lib/supabaseConfig';
 
 interface IAccountProps {
-  session: any;
+  session: Session;
 }
 
 const Account = ({ session }: IAccountProps) => {
   const [loading, setLoading] = useState(true);
-  const [username, setUsername] = useState(null);
-  const [website, setWebsite] = useState(null);
-  const [avatar_url, setAvatarUrl] = useState(null);
+  const initialProfile = {
+    id: '',
+    username: '',
+    website: '',
+    avatarUrl: '',
+  };
+
+  const [profile, setProfile] = useState(initialProfile);
 
   const getProfile = async () => {
     try {
@@ -25,13 +30,11 @@ const Account = ({ session }: IAccountProps) => {
       }
 
       if (data) {
-        setUsername(data.username);
-        setWebsite(data.website);
-        setAvatarUrl(data.avatar_url);
+        setProfile(data);
       }
-    } catch (error: unknown) {
+    } catch (error) {
       if (error instanceof Error) {
-        console.error(error);
+        console.error(error.message);
       }
     } finally {
       setLoading(false);
@@ -42,28 +45,35 @@ const Account = ({ session }: IAccountProps) => {
     getProfile();
   }, [session]);
 
-  const updateProfile = async ({ username, website, avatar_url }) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setProfile({ ...profile, [name]: value });
+  };
+
+  const updateProfile = async () => {
     try {
       setLoading(true);
       const user = supabase.auth.user();
 
       const updates = {
+        ...profile,
         id: user?.id,
-        username,
-        website,
-        avatar_url,
         updated_at: new Date(),
       };
 
-      const { error } = await supabase.from('profiles').upsert(updates, {
-        returning: 'minimal', // Don't return the value after inserting
-      });
+      const { error } = await supabase
+        .from('profiles')
+        .upsert(updates, {
+          returning: 'minimal', // Don't return the value after inserting
+        });
 
       if (error) {
-        throw error;
+        throw new Error(error.message);
       }
     } catch (error) {
-      alert(error.message);
+      if (error instanceof Error) {
+        console.error(error.message);
+      }
     } finally {
       setLoading(false);
     }
@@ -74,7 +84,7 @@ const Account = ({ session }: IAccountProps) => {
       <div>
         <label htmlFor="email">
           Email
-          <input id="email" type="text" value={session.user.email} disabled />
+          <input id="email" type="text" value={session.user?.email} disabled />
         </label>
       </div>
       <div>
@@ -82,9 +92,10 @@ const Account = ({ session }: IAccountProps) => {
           Name
           <input
             id="username"
+            name="username"
             type="text"
-            value={username || ''}
-            onChange={(e) => setUsername(e.target.value)}
+            value={profile.username || ''}
+            onChange={handleChange}
           />
 
         </label>
@@ -94,9 +105,10 @@ const Account = ({ session }: IAccountProps) => {
           Website
           <input
             id="website"
+            name="website"
             type="website"
-            value={website || ''}
-            onChange={(e) => setWebsite(e.target.value)}
+            value={profile.website || ''}
+            onChange={handleChange}
           />
         </label>
       </div>
@@ -105,7 +117,7 @@ const Account = ({ session }: IAccountProps) => {
         <button
           type="button"
           className="button block primary"
-          onClick={() => updateProfile({ username, website, avatar_url })}
+          onClick={updateProfile}
           disabled={loading}
         >
           {loading ? 'Loading ...' : 'Update'}

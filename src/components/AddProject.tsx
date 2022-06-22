@@ -1,20 +1,25 @@
 import { supabase } from '@lib/supabaseConfig';
 import useStore from '@store/.';
+import { User } from '@supabase/supabase-js';
 import React, { useRef } from 'react';
+import { trpc } from '../utils/trpc';
 
 const AddProject = () => {
   const detailsRef = useRef<HTMLDetailsElement | null>(null);
   const store = useStore((state) => state);
   const { newProject } = store;
 
-  const addProject = () => newProject.name
-    && supabase.from('projects').insert({
-      name: newProject.name,
-      user_id: supabase.auth.user()?.id,
-    })
-      .then(() => {
-        store.addProject();
+  const addNewProject = trpc.useMutation(['add-project']);
+
+  const addProject = () => {
+    const user = supabase.auth.user() as User;
+    addNewProject
+      .mutate({
+        user_id: user.id,
+        name: newProject.name,
       });
+    store.addProject();
+  };
 
   const handleCancel = (e: React.KeyboardEvent | React.MouseEvent) => {
     if (e.type !== 'mousedown' || (e as React.KeyboardEvent).key === 'Enter') {

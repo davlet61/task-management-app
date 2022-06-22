@@ -1,8 +1,14 @@
-import useStore from '@store/.';
+import { trpc } from '@utils/trpc';
+import { nanoid } from 'nanoid';
 import AddProject from './AddProject';
 
 const Sidebar = () => {
-  const { projects } = useStore((state) => state);
+  const projects = trpc.useQuery(['all'], {
+    staleTime: 3000,
+  });
+  if (!projects.data) {
+    return null;
+  }
 
   return (
     <aside className="w-60 h-full shadow-md bg-white px-1 fixed">
@@ -13,8 +19,8 @@ const Sidebar = () => {
       </ul>
       <hr className="h-0.5 w-2/3 mx-auto my-4 bg-gray-400 rounded" />
       <ul className="relative px-6 py-2">
-        {projects.length > 0 && projects.map((p) => (
-          <li key={p.id} className="relative">
+        {projects.data.length > 0 && projects.data.map((p) => (
+          <li key={nanoid()} className="relative">
             <h3>{p.name}</h3>
           </li>
         ))}

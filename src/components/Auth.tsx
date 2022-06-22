@@ -1,18 +1,24 @@
 import { supabase } from '@lib/supabaseConfig';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 const Auth = () => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
 
-  const handleLogin = async (email) => {
+  const handleLogin = async (e: React.MouseEvent) => {
+    e.preventDefault();
     try {
       setLoading(true);
       const { error } = await supabase.auth.signIn({ email });
-      if (error) throw error;
+
+      if (error) {
+        throw new Error(error.message);
+      }
       alert('Check your email for the login link!');
     } catch (error) {
-      alert(error.error_description || error.message);
+      if (error instanceof Error) {
+        console.log(error.message);
+      }
     } finally {
       setLoading(false);
     }
@@ -35,10 +41,7 @@ const Auth = () => {
         <div>
           <button
             type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              handleLogin(email);
-            }}
+            onClick={handleLogin}
             className="button block"
             disabled={loading}
           >

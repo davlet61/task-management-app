@@ -23,7 +23,8 @@
       "@public/*": ["public/*"],
       "@store/*": ["store/*"],
       "@utils/*": ["utils/*"],
-      "@client/*": ["client/*"]
+      "@client/*": ["client/*"],
+      "@routers/*": ["routers/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/example"],

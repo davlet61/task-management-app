@@ -1,6 +1,6 @@
 import { withTRPC } from '@trpc/next';
 import { AppType } from 'next/dist/shared/lib/utils';
-import { AppRouter } from './api/trpc/[trpc]';
+import type { AppRouter } from '@routers/.';
 import '../styles/globals.css';
 
 const MyApp: AppType = ({ Component, pageProps }) => <Component {...pageProps} />;
