@@ -30,7 +30,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
     <Loading />
   ) : (
     <LiveblocksProvider client={client}>
-      <RoomProvider id="react-todo-app">
+      <RoomProvider id="task-management-app">
         <VisibilityProvider>
           <ClickToComponent />
           <Component {...pageProps} />

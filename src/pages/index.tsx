@@ -6,11 +6,9 @@ import WhoIsHere from '@components/WhoIsHere';
 
 const Home: NextPage = () => (
   <Layout>
-    <main className="h-[calc(100vh-5rem)]">
-      <WhoIsHere />
-      <Sidebar />
-      <Todos />
-    </main>
+    <WhoIsHere />
+    <Sidebar />
+    <Todos />
   </Layout>
 );
 

@@ -13,10 +13,8 @@ const Projects = (props: InferGetServerSidePropsType<typeof getServerSideProps>)
   const { id } = props;
   return (
     <Layout>
-      <main className="h-[calc(100vh-5rem)]">
-        <Sidebar />
-        <Todos id={id} />
-      </main>
+      <Sidebar />
+      <Todos id={id} />
     </Layout>
   );
 };

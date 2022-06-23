@@ -5,9 +5,11 @@ const WhoIsHere = () => {
 
   return (
     <div className="who_is_here">
-      There are
-      {others.count}
-      other users online
+      <p>
+        There are
+        <span>{others.count}</span>
+        other users online
+      </p>
     </div>
   );
 };

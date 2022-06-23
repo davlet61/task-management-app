@@ -25,3 +25,12 @@ export type HandleCloseFn = (bool: boolean) => void;
 export type HandleClick = () => void;
 
 export type HandleDelAndStatusFn = (id: string) => void;
+
+export interface ICursor {
+  x: number;
+  y: number;
+}
+
+export type Presence = {
+  cursor: ICursor | null;
+};
