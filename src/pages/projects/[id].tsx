@@ -1,4 +1,4 @@
-import type { GetStaticPaths, GetStaticPropsContext, NextPage } from 'next';
+import type { GetStaticPaths, GetStaticPropsContext } from 'next';
 import AddTodo from '@components/AddTodo';
 import Sidebar from '@components/Sidebar';
 import TodoList from '@components/TodoList';
