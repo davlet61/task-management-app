@@ -11,6 +11,7 @@ const Profile: NextPage = () => {
   useEffect(() => {
     setSession(supabase.auth.session());
 
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });

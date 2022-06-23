@@ -1,9 +1,12 @@
+import { inferQueryOutput } from '@utils/trpc';
+
 export interface Project {
   id: string;
   user_id: string;
   name: string;
   todos: Task[];
 }
+export type IProject = inferQueryOutput<'project.all'>[number];
 
 export interface Task {
   id: string;
