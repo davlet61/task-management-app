@@ -35,7 +35,7 @@ const initialState: Task = {
 
 const initialProject: Project = {
   id: '',
-  user_id: '',
+  user_id: '311eb43d-d131-4d97-8588-87db10048ca3',
   name: '',
   todos: [],
 };

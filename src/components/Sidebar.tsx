@@ -15,7 +15,7 @@ const Sidebar = () => {
   }
 
   return (
-    <aside className="w-60 h-full shadow-md bg-neutral-50 p-1 flex flex-col items-center justify-start fixed">
+    <aside className="w-60 h-full shadow-md bg-neutral-50 p-1 flex flex-col items-center justify-start fixed overflow-auto">
       <ul className="relative mt-4">
         <li className="relative">
           <AddProject />
