@@ -8,6 +8,7 @@ const TodoItem = ({ todo }: ITodoItemProps) => {
   const store = useStore((state) => state);
 
   return (
+    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <article
       data-testid="toggleComplete"
       className="flex justify-center ml-60 gap-4"

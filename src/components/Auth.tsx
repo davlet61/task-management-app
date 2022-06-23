@@ -14,10 +14,11 @@ const Auth = () => {
       if (error) {
         throw new Error(error.message);
       }
+      // eslint-disable-next-line no-alert
       alert('Check your email for the login link!');
     } catch (error) {
       if (error instanceof Error) {
-        console.log(error.message);
+        console.error(error.message);
       }
     } finally {
       setLoading(false);

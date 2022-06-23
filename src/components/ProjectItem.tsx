@@ -25,7 +25,7 @@ const ProjectItem = ({ project }: IProjectItemProps) => {
       }
       utils.setQueryData(
         ['project.all'],
-        allProjects.map((p) => (p.id === id
+        allProjects.map((p: Project) => (p.id === id
           ? {
             ...p,
             ...data,
@@ -44,7 +44,7 @@ const ProjectItem = ({ project }: IProjectItemProps) => {
       }
       utils.setQueryData(
         ['project.all'],
-        allProjects.filter((p) => p.id !== project.id),
+        allProjects.filter((p: Project) => p.id !== project.id),
       );
     },
   });
