@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { useIsMutating } from 'react-query';
 import { v4 as uuid } from 'uuid';
 import { HandleChangeFn, HandleSubmitFn, Task } from 'types';
-import { useRouter } from 'next/router';
 import { useUpdateMyPresence } from '@liveblocks/react';
 import TodoItem from './TodoItem';
 import { Broom } from './SVGs';
@@ -19,10 +18,8 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
     completed: false,
     created_at: new Date(),
   };
-  const [toggleAll, setToggleAll] = useState(false);
   const [newTask, setNewTask] = useState(initialState);
   const updateMyPresence = useUpdateMyPresence();
-  const router = useRouter();
   const allTodos = trpc.useQuery(['todo.all'], {
     staleTime: 3000,
   });
@@ -62,7 +59,7 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
   });
 
   const toggleComplete = trpc.useMutation('todo.all-completed', {
-    async onMutate({ done }) {
+    async onMutate({ data }) {
       await utils.cancelQuery(['todo.all']);
       const allTasks = utils.getQueryData(['todo.all']);
       if (!allTasks) {
@@ -72,7 +69,7 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
         ['todo.all'],
         allTasks.map((t) => ({
           ...t,
-          completed: done,
+          completed: data.completed,
         }
         )),
       );
@@ -137,23 +134,21 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
       <UserIsTyping action="typing" />
       {filteredTodos && filteredTodos.length > 0 && (
         <section className="flex p-1 flex-col gap-2 overflow-hidden items-center justify-center mx-4">
-          <label htmlFor="toggle-all">
+          <label className="m-4 text-sm font-medium md:ml-60" htmlFor={`${newTask.id}-checkbox`}>
             <input
-              id="toggle-all"
-              className="mx-2"
+              id={`${newTask.id}-checkbox`}
               type="checkbox"
-              checked={toggleAll}
+              checked={newTask.completed}
+              className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2 "
               onChange={(e) => {
                 const { checked } = e.currentTarget;
-                setToggleAll(checked);
+                setNewTask({ ...newTask, completed: checked });
                 toggleComplete.mutate({
-                  done: checked,
+                  data: { project_id: newTask.project_id, completed: checked },
                 });
-                const path = checked ? '/completed' : '/all';
-                router.push(path);
               }}
             />
-            Mark all as complete
+            &nbsp; Mark all as complete
           </label>
           <ul className="flex flex-col items-center justify-center gap-3 md:ml-80">
             {filteredTodos?.filter((task) => {

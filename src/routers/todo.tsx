@@ -78,10 +78,17 @@ const todoRouter = createRouter()
   })
   .mutation('all-completed', {
     input: z.object({
-      done: z.boolean(),
+      data: z.object({
+        project_id: z.string(),
+        completed: z.boolean(),
+      }),
     }),
     async resolve({ ctx, input }) {
-      await ctx.todos.updateMany({ data: { completed: input.done } });
+      const { data } = input;
+      await ctx.todos.updateMany({
+        where: { project_id: data.project_id },
+        data: { completed: data.completed },
+      });
     },
   })
   .mutation('clear-completed', {
