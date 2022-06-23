@@ -9,6 +9,7 @@ const todoRouter = createRouter()
           created_at: 'desc',
         },
         select: {
+          id: true,
           title: true,
           project_id: true,
           description: true,

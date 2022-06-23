@@ -2,6 +2,7 @@ export interface Project {
   id: string;
   user_id: string;
   name: string;
+  todos: Task[];
 }
 
 export interface Task {

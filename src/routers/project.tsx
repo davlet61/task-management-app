@@ -9,6 +9,7 @@ const projectRouter = createRouter()
           created_at: 'desc',
         },
         select: {
+          id: true,
           name: true,
           user_id: true,
           todos: true,

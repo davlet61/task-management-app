@@ -1,5 +1,5 @@
 import create from 'zustand';
-import { nanoid } from 'nanoid';
+import { v4 as uuid } from 'uuid';
 import { Project, Store, Task } from '../types';
 
 const updateTodo = (todos: Task[], todo: Task): Task[] => todos
@@ -16,7 +16,7 @@ const addTodo = (todos: Task[], todo: Task): Task[] => [
   ...todos,
   {
     ...todo,
-    id: nanoid(),
+    id: uuid(),
     completed: false,
   },
 ];
@@ -39,6 +39,7 @@ const initialProject: Project = {
   id: '',
   user_id: '',
   name: '',
+  todos: [],
 };
 
 const useStore = create<Store>(
