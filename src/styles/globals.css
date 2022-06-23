@@ -3,19 +3,19 @@
 @tailwind utilities;
 
 /* Write your own custom component styles here */
-.btn-black {
-  @apply border border-black bg-black text-white font-bold py-2 px-4 rounded text-center;
+.btn-red {
+  @apply border border-red-400 bg-red-400 text-white font-bold py-2 px-4 rounded text-center;
 }
 
-.btn-black:hover {
+.btn-red:hover {
   @apply transition duration-150 bg-white text-black;
 }
 
-.btn-black-outline {
+.btn-red-outline {
   @apply border border-black text-black py-2 px-4 rounded font-bold text-center;
 }
 
-.btn-black-outline:hover {
+.btn-red-outline:hover {
   @apply transition duration-150 bg-black text-white;
 }
 

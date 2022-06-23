@@ -4,13 +4,13 @@ const WhoIsHere = () => {
   const others = useOthers();
 
   return (
-    <div className="who_is_here">
+    <section className="flex justify-center items-center text-sm text-sky-800 italic mt-4 animate-pulse">
       <p>
         There are
-        <span>{others.count}</span>
+        <span className="text-red-500 font-semibold">{` ${others.count} `}</span>
         other users online
       </p>
-    </div>
+    </section>
   );
 };
 

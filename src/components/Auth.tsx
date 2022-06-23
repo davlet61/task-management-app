@@ -1,9 +1,11 @@
 import supabase from '@lib/supabaseConfig';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
 const Auth = () => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
+  const router = useRouter();
 
   const handleLogin = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -25,32 +27,40 @@ const Auth = () => {
     }
   };
 
+  const handleBack = () => {
+    router.push('/');
+  };
+
   return (
-    <div className="row flex flex-center">
-      <div className="col-6 form-widget">
-        <h1 className="header">Supabase + Next.js</h1>
-        <p className="description">Sign in via magic link with your email below</p>
-        <div>
-          <input
-            className="inputField"
-            type="email"
-            placeholder="Your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div>
-          <button
-            type="button"
-            onClick={handleLogin}
-            className="button block"
-            disabled={loading}
-          >
-            <span>{loading ? 'Loading' : 'Send magic link'}</span>
-          </button>
-        </div>
-      </div>
-    </div>
+    <section className="flex flex-col items-center justify-center gap-2 p-8 bg-slate-500 rounded-md">
+      <h1 className="font-bold text-white">Task Management App</h1>
+      <p className="text-gray-100">Sign in via magic link</p>
+      <form>
+        <input
+          className="p-2 outline-2 focus:outline  focus:outline-red-600 rounded-md placeholder:italic"
+          type="email"
+          placeholder="Your email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </form>
+      <button
+        type="button"
+        onClick={handleLogin}
+        className="btn-red m-1"
+        disabled={loading}
+      >
+        <span>{loading ? 'Loading' : 'Send magic link'}</span>
+      </button>
+      <button
+        type="button"
+        onClick={handleBack}
+        className="btn-red-outline"
+        disabled={loading}
+      >
+        Back
+      </button>
+    </section>
   );
 };
 

@@ -71,7 +71,7 @@ const AddProject = () => {
         />
         <div className="flex gap-1">
           <button
-            className="btn-black"
+            className="btn-red"
             type="button"
             onClick={() => addProject()}
             data-testid="add-project-submit"
@@ -81,7 +81,7 @@ const AddProject = () => {
           <span
             aria-label="Cancel adding project"
             data-testid="hide-project-overlay"
-            className="btn-black-outline"
+            className="btn-red-outline"
             onClick={handleCancel}
             onKeyDown={handleCancel}
             role="button"

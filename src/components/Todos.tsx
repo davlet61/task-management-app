@@ -129,12 +129,12 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
             value={newTask.description || ''}
             onChange={handleChange}
           />
-          <button id="btnAddTodo" className="btn-black" type="submit">
+          <button id="btnAddTodo" className="btn-red" type="submit">
             Add
           </button>
         </fieldset>
       </form>
-      <UserIsTyping />
+      <UserIsTyping action="typing" />
       {filteredTodos && filteredTodos.length > 0 && (
         <section className="flex p-1 flex-col gap-2 overflow-hidden items-center justify-center mx-4">
           <label htmlFor="toggle-all">

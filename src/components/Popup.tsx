@@ -22,7 +22,7 @@ const Popup = ({ children }: { children: ReactNode }) => {
         </span>
         <div className="popup__content">{children}</div>
         <button
-          className="btn-black uppercase "
+          className="btn-red uppercase "
           type="submit"
           onClick={handleClearStorage}
         >

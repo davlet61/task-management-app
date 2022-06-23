@@ -18,9 +18,9 @@ const Profile: NextPage = () => {
   }, []);
 
   return (
-    <div className="container" style={{ padding: '50px 0 100px 0' }}>
+    <main className="flex items-center justify-center h-[100vh] bg-neutral-200">
       {!session ? <Auth /> : <Account key={session.user?.id} session={session} />}
-    </div>
+    </main>
   );
 };
 
