@@ -6,11 +6,20 @@ import '../styles/globals.css';
 
 const MyApp: AppType = ({ Component, pageProps }) => <Component {...pageProps} />;
 
+const getBaseUrl = () => {
+  if (typeof window !== 'undefined') {
+    return '';
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+
+  return `http://localhost:${process.env.PORT ?? 3000}`;
+};
+
 export default withTRPC<AppRouter>({
   config() {
-    const url = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}/api/trpc`
-      : 'http://localhost:3000/api/trpc';
+    const url = `${getBaseUrl()}/api/trpc`;
 
     // eslint-disable-next-line no-console
     console.log('🚀 ~ file: _app.tsx ~ line 12 ~ config ~ process.env.VERCEL_URL', process.env.VERCEL_URL);
