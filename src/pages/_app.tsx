@@ -12,6 +12,8 @@ export default withTRPC<AppRouter>({
       ? `https://${process.env.VERCEL_URL}/api/trpc`
       : 'http://localhost:3000/api/trpc';
 
+    // eslint-disable-next-line no-console
+    console.log('🚀 ~ file: _app.tsx ~ line 12 ~ config ~ url', url);
     return {
       url,
       transformer,
