@@ -31,6 +31,29 @@ const projectRouter = createRouter()
       });
       return project;
     },
+  })
+  .mutation('edit', {
+    input: z.object({
+      id: z.string().uuid(),
+      data: z.object({
+        name: z.string().min(1).optional(),
+      }),
+    }),
+    async resolve({ ctx, input }) {
+      const { id, data } = input;
+      const todo = await ctx.projects.update({
+        where: { id },
+        data,
+      });
+      return todo;
+    },
+  })
+  .mutation('delete', {
+    input: z.string().uuid(),
+    async resolve({ input: id, ctx }) {
+      await ctx.projects.delete({ where: { id } });
+      return id;
+    },
   });
 
 export default projectRouter;

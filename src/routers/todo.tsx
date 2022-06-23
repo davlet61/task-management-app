@@ -19,16 +19,18 @@ const todoRouter = createRouter()
       return todos;
     },
   })
-  .mutation('add-project', {
+  .mutation('add', {
     input: z.object({
-      user_id: z.string(),
-      name: z.string(),
+      project_id: z.string(),
+      title: z.string(),
+      description: z.string().optional(),
     }),
     async resolve({ ctx, input }) {
-      const project = await ctx.projects.create({
+      const project = await ctx.todos.create({
         data: {
-          name: input.name,
-          user_id: input.user_id,
+          title: input.title,
+          project_id: input.project_id,
+          description: input.description,
         },
       });
       return project;

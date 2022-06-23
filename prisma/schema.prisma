@@ -17,7 +17,7 @@ model profiles {
 }
 
 model projects {
-  id         BigInt    @id @default(autoincrement())
+  id         String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   created_at DateTime? @default(now()) @db.Timestamptz(6)
   name       String?
   user_id    String?   @db.Uuid
@@ -26,11 +26,11 @@ model projects {
 }
 
 model todos {
-  id          BigInt    @id @default(autoincrement())
+  id          String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   created_at  DateTime? @default(now()) @db.Timestamptz(6)
   title       String?
   description String?
-  project_id  BigInt?
+  project_id  String    @db.Uuid
   completed   Boolean?  @default(false)
-  projects    projects? @relation(fields: [project_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  projects    projects  @relation(fields: [project_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
