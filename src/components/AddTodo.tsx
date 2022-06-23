@@ -1,9 +1,11 @@
 import useStore from '@store/.';
+import { trpc } from '@utils/trpc';
 import { HandleChangeFn, HandleSubmitFn } from '../types';
 
 const AddTodo = () => {
   const store = useStore((state) => state);
   const { newTodo } = store;
+  const allTodos = trpc.useQuery(['todo.all']);
 
   const handleChange: HandleChangeFn = (e) => {
     const { value, name } = e.target;
@@ -17,13 +19,12 @@ const AddTodo = () => {
 
   return (
     <section className="flex justify-center ml-60">
-      <form className="form" onSubmit={handleSubmit}>
-        <fieldset className="flex">
+      <form onSubmit={handleSubmit}>
+        <fieldset className="flex flex-wrap">
           <legend className="mx-auto">Add a new task</legend>
           <label htmlFor="txtTodoItemToAdd">
             Title
             <input
-              className="add__title"
               id="txtTodoItemToAdd"
               type="text"
               name="title"
@@ -36,7 +37,6 @@ const AddTodo = () => {
           <label htmlFor="add-description">
             Description
             <input
-              className="add__description"
               id="add-description"
               name="description"
               placeholder="Short description of the task"

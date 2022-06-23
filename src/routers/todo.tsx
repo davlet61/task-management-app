@@ -27,14 +27,39 @@ const todoRouter = createRouter()
       description: z.string().optional(),
     }),
     async resolve({ ctx, input }) {
+      const { project_id, title, description } = input;
       const project = await ctx.todos.create({
         data: {
-          title: input.title,
-          project_id: input.project_id,
-          description: input.description,
+          project_id,
+          title,
+          description,
         },
       });
       return project;
+    },
+  })
+  .mutation('edit', {
+    input: z.object({
+      id: z.string().uuid(),
+      data: z.object({
+        title: z.string().min(1).optional(),
+        description: z.string().min(3).optional(),
+      }),
+    }),
+    async resolve({ ctx, input }) {
+      const { id, data } = input;
+      const todo = await ctx.todos.update({
+        where: { id },
+        data,
+      });
+      return todo;
+    },
+  })
+  .mutation('delete', {
+    input: z.string().uuid(),
+    async resolve({ input: id, ctx }) {
+      await ctx.todos.delete({ where: { id } });
+      return id;
     },
   });
 
