@@ -6,19 +6,36 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "vitest",
+    "db:migrate": "npx prisma migrate dev --name init",
+    "db:pull": "npx prisma db pull"
   },
   "dependencies": {
+    "@prisma/client": "^3.15.2",
+    "@supabase/supabase-js": "^1.35.3",
+    "@trpc/client": "^9.25.3",
+    "@trpc/next": "^9.25.3",
+    "@trpc/react": "^9.25.3",
+    "@trpc/server": "^9.25.3",
     "next": "12.1.6",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-query": "^3.39.1",
+    "superjson": "^1.9.1",
+    "uuid": "^8.3.2",
+    "zod": "^3.17.3",
+    "zustand": "4.0.0-rc.1"
   },
   "devDependencies": {
+    "@testing-library/react": "^13.3.0",
     "@types/node": "18.0.0",
     "@types/react": "18.0.14",
     "@types/react-dom": "18.0.5",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.28.0",
     "@typescript-eslint/parser": "^5.28.0",
+    "@vitejs/plugin-react": "^1.3.2",
     "autoprefixer": "^10.4.7",
     "eslint": "8.18.0",
     "eslint-config-airbnb": "^19.0.4",
@@ -29,9 +46,11 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.30.0",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "jsdom": "^20.0.0",
     "postcss": "^8.4.14",
     "prettier": "^2.7.1",
     "tailwindcss": "^3.1.3",
-    "typescript": "^4.7.4"
+    "typescript": "^4.7.4",
+    "vitest": "^0.15.1"
   }
 }

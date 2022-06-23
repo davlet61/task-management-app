@@ -14,15 +14,18 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
       "@components/*": ["components/*"],
       "@pages/*": ["pages/*"],
       "@lib/*": ["lib/*"],
       "@hooks/*": ["hooks/*"],
-      "@public/*": ["public/*"]
+      "@public/*": ["public/*"],
+      "@store/*": ["store/*"],
+      "@utils/*": ["utils/*"],
+      "@routers/*": ["routers/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/example"],
   "exclude": ["node_modules"]
 }

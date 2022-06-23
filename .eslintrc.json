@@ -30,7 +30,16 @@
         "unnamedComponents": ["function-expression", "arrow-function"]
       }
     ],
-    "react/jsx-props-no-spreading": [0, { "html": "ignore" }]
+    "react/jsx-props-no-spreading": [0, { "html": "ignore" }],
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "variable",
+        "format": ["camelCase", "PascalCase", "snake_case", "UPPER_CASE"]
+      }
+    ]
   },
   "ignorePatterns": [
     ".eslintrc.json",
