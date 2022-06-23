@@ -20,5 +20,5 @@ export const VisibilityProvider = ({ children }: { children: React.ReactNode }) 
 };
 
 export const client = createClient({
-  publicApiKey: 'pk_live_xxxxxxxxxxxxxxxxxxxxxxxx',
+  publicApiKey: process.env.NEXT_PUBLIC_LIVEBLOCKS_PUBLIC_API_KEY as string,
 });
