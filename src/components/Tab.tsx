@@ -1,10 +1,9 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useCallback } from 'react';
 import { v4 as uuid } from 'uuid';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { Routes } from 'types';
-import { NavigationType } from '@lib/navigation';
+import { matchRoute, NavigationType } from '@lib/navigation';
 import useVisibility from '@hooks/useVisibility';
 import {
   MenuButton, HomeFilled, InboxInSolid, UserSolid,
@@ -16,7 +15,11 @@ interface ITabbarProps {
 
 const Tabbar = ({ navigationData }: ITabbarProps) => {
   const { visibility, setVisibility } = useVisibility();
-  const { pathname } = useRouter();
+  const { pathname, push, query } = useRouter();
+
+  const handleClick = useCallback(() => {
+    push('/profile');
+  }, [push]);
 
   const getTabIcon = useCallback((title: string) => {
     switch (title) {
@@ -25,12 +28,12 @@ const Tabbar = ({ navigationData }: ITabbarProps) => {
       case 'Inbox':
         return <InboxInSolid />;
       case 'Profile':
-        return <UserSolid w={5} h={5} />;
+        return <UserSolid w={5} h={5} click={handleClick} />;
 
       default:
         return <HomeFilled />;
     }
-  }, []);
+  }, [handleClick]);
 
   const handleClickOrEnter = (e: React.KeyboardEvent | React.MouseEvent) => {
     if (e.type === 'click' || (e as React.KeyboardEvent).key === 'Enter') {
@@ -44,7 +47,7 @@ const Tabbar = ({ navigationData }: ITabbarProps) => {
       {navigationData.map((route: Routes) => (
         <li
           key={uuid()}
-          className={`tab-item ${pathname === route.title && 'tab-itemActive'}`}
+          className={`tab-item ${matchRoute(route, pathname, query) && 'tab-item-active'}`}
         >
           <div
             role="link"
