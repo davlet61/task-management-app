@@ -5,11 +5,12 @@ import { useIsMutating } from 'react-query';
 import { v4 as uuid } from 'uuid';
 import { HandleChangeFn, HandleSubmitFn, Task } from 'types';
 import { useUpdateMyPresence } from '@liveblocks/react';
+import { useRouter } from 'next/router';
 import TodoItem from './TodoItem';
 import { Broom } from './SVGs';
 import UserIsTyping from './UserIsTyping';
 
-const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
+const Todos = ({ id }: { id?: string }) => {
   const initialState: Task = {
     id: '',
     title: '',
@@ -19,6 +20,7 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
     created_at: new Date(),
   };
   const [newTask, setNewTask] = useState(initialState);
+  const { query } = useRouter();
   const updateMyPresence = useUpdateMyPresence();
   const allTodos = trpc.useQuery(['todo.all'], {
     staleTime: 3000,
@@ -152,13 +154,13 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
           </label>
           <ul className="flex flex-col items-center justify-center gap-3 md:ml-80">
             {filteredTodos?.filter((task) => {
-              if (filter === 'todo') {
+              if (query.id?.includes('todo')) {
                 return !task.completed;
               }
-              if (filter === 'done') {
+              if (query.id?.includes('done')) {
                 return task.completed;
               }
-              return true;
+              return task;
             })
               .map((task) => (
                 <TodoItem key={task.id} todo={task} />
@@ -179,7 +181,7 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
           </span>
           <ul className="flex flex-col gap-4 md:flex-row items-center justify-center">
             <li>
-              <NextLink href="/all" passHref>
+              <NextLink href={`/projects/${id}/all`} passHref>
                 <a className={hrefClasses} href="dummy">
                   All&nbsp;
                   <span className="font-semibold">
@@ -191,7 +193,7 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
               </NextLink>
             </li>
             <li>
-              <NextLink href="/todo" passHref>
+              <NextLink href={`/projects/${id}/todo`} passHref>
                 <a className={hrefClasses} href="dummy">
                   Todo&nbsp;
                   <span className="text-orange-400 font-semibold">
@@ -206,7 +208,7 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
               </NextLink>
             </li>
             <li>
-              <NextLink href="/done" passHref>
+              <NextLink href={`/projects/${id}/done`} passHref>
                 <a className={hrefClasses} href="dummy">
                   Done&nbsp;
                   <span className="text-green-600 font-semibold">
@@ -243,5 +245,4 @@ export default Todos;
 
 Todos.defaultProps = {
   id: '1ce88c26-9e9a-44ea-b5e2-9ea6f8f1fb07',
-  filter: 'all',
 };

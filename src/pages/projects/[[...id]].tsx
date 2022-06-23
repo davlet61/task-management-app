@@ -10,11 +10,11 @@ import { transformer } from '@utils/trpc';
 import Layout from '@components/Layout';
 
 const Projects = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const { filter } = props;
+  const { id } = props;
   return (
     <Layout>
       <Sidebar />
-      <Todos filter={filter} />
+      <Todos id={id} />
     </Layout>
   );
 };
@@ -22,21 +22,23 @@ const Projects = (props: InferGetServerSidePropsType<typeof getServerSideProps>)
 export default Projects;
 
 export const getServerSideProps = async (
-  context: GetServerSidePropsContext<{ filter: string }>,
+  context: GetServerSidePropsContext<{ id: string, filter: string }>,
 ) => {
   const ssg = createSSGHelpers({
     router: appRouter,
     ctx: await createContext(),
     transformer,
   });
-  const filter = context.params?.filter as string;
+  const id = context.params?.id as string;
 
-  ['todo', 'done', 'all'].map((f) => f);
+  // await ssg.fetchQuery('project.ids');
+  const single = await ssg.fetchQuery('project.single', { id: id[0] });
 
   return {
     props: {
       trpcState: ssg.dehydrate(),
-      filter,
+      id: single?.id,
+      filter: ['all', 'todo', 'done'].map((f) => f),
     },
   };
 };
