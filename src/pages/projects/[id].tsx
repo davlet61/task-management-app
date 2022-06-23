@@ -5,23 +5,18 @@ import TodoList from '@components/TodoList';
 import { appRouter } from '@pages/api/trpc/[trpc]';
 import { createSSGHelpers } from '@trpc/react/ssg';
 import { createContext } from '@utils/context';
-import { Params, Project } from 'types';
+import { Params, Task } from 'types';
 
 interface IProjectProps {
-  projects: Project[];
+  todos: Task[];
 }
-const Projects: NextPage<IProjectProps> = ({ projects }) => {
-  // eslint-disable-next-line no-console
-  console.log('projects', projects);
-
-  return (
-    <main>
-      <Sidebar />
-      <AddTodo />
-      <TodoList />
-    </main>
-  );
-};
+const Projects: NextPage<IProjectProps> = ({ todos }) => (
+  <main>
+    <Sidebar />
+    <AddTodo />
+    <TodoList tasks={todos} />
+  </main>
+);
 
 export default Projects;
 
@@ -50,13 +45,13 @@ export const getStaticProps = async (
   });
 
   await ssg.fetchQuery('project.ids');
-  const projects = await ssg.fetchQuery('project.all');
+  const todos = await ssg.fetchQuery('todo.all-match', { project_id: context.params?.id ?? '' });
 
   return {
     props: {
       trpcState: ssg.dehydrate(),
       id: context.params?.id ?? '',
-      projects,
+      todos,
     },
     revalidate: 1,
   };

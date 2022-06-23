@@ -19,6 +19,27 @@ const todoRouter = createRouter()
       return todos;
     },
   })
+  .query('all-match', {
+    input: z.object({
+      project_id: z.string(),
+    }),
+    async resolve({ ctx, input }) {
+      const todos = await ctx.todos.findMany({
+        where: { project_id: input.project_id },
+        orderBy: {
+          created_at: 'desc',
+        },
+        select: {
+          id: true,
+          title: true,
+          project_id: true,
+          description: true,
+          completed: true,
+        },
+      });
+      return todos;
+    },
+  })
   .mutation('add', {
     input: z.object({
       project_id: z.string(),
