@@ -6,7 +6,7 @@ const projectRouter = createRouter()
     async resolve({ ctx }) {
       const projects = await ctx.projects.findMany({
         orderBy: {
-          created_at: 'desc',
+          created_at: 'asc',
         },
         select: {
           id: true,

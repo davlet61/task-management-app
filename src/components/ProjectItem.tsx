@@ -1,18 +1,19 @@
 import useClickOutside from '@hooks/useClickOutside';
 import { inferQueryOutput, trpc } from '@utils/trpc';
 import { useRef, useState } from 'react';
+import { DeleteButton, EditButton } from './SVGs';
 
 type Project = inferQueryOutput<'project.all'>[number];
 
-interface IProjectListProps {
+interface IProjectItemProps {
   project: Project;
 }
 
-const ProjectList = ({ project }: IProjectListProps) => {
+const ProjectItem = ({ project }: IProjectItemProps) => {
   const [projectName, setProjectName] = useState(project.name || '');
   const [editing, setEditing] = useState(false);
   const listRef = useRef<HTMLLIElement | null>(null);
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const utils = trpc.useContext();
 
   const editProject = trpc.useMutation('project.edit', {
@@ -60,12 +61,21 @@ const ProjectList = ({ project }: IProjectListProps) => {
     },
   });
 
+  const handleDelete = () => {
+    deleteProject.mutate(project.id);
+  };
+
+  const handleEdit = () => {
+    setEditing(true);
+    inputRef.current?.focus();
+  };
+
   return (
-    <li ref={listRef} className="relative">
-      <input
+    <li ref={listRef} className="relative flex flex-1 h-full p-2 gap-4 bg-slate-400 border-2 rounded hover:cursor-move" draggable>
+      <textarea
         ref={inputRef}
-        type="text"
         name="project-name"
+        className="w-full h-auto px-2 py-1 text-base text-white bg-transparent text-center resize-none select-auto overflow-hidden focus:outline-none "
         value={projectName}
         onChange={(e) => {
           const newName = e.currentTarget.value;
@@ -81,26 +91,11 @@ const ProjectList = ({ project }: IProjectListProps) => {
           setEditing(false);
         }}
       />
-      <button
-        type="button"
-        onClick={() => {
-          setEditing(true);
-          inputRef.current?.focus();
-        }}
-      >
-        Edit
-
-      </button>
-      <button
-        type="button"
-        onClick={() => {
-          deleteProject.mutate(project.id);
-        }}
-      >
-        Delete
-
-      </button>
+      <div className="flex flex-col justify-center items-center gap-1">
+        <EditButton edit={handleEdit} />
+        <DeleteButton click={handleDelete} />
+      </div>
     </li>
   );
 };
-export default ProjectList;
+export default ProjectItem;

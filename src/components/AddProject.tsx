@@ -1,5 +1,6 @@
 import supabase from '@lib/supabaseConfig';
 import useStore from '@store/.';
+import { v4 as uuid } from 'uuid';
 import { User } from '@supabase/supabase-js';
 import React, { useRef } from 'react';
 import { trpc } from '@utils/trpc';
@@ -20,6 +21,7 @@ const AddProject = () => {
         [
           ...projects,
           {
+            id: uuid(),
             user_id,
             name,
             todos: [],

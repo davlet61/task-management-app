@@ -38,5 +38,6 @@ export type HandleChangeFn = (
 export type HandleSubmitFn = (event: React.FormEvent) => void;
 
 export type HandleCloseFn = (bool: boolean) => void;
+export type HandleClick = () => void;
 
 export type HandleDelAndStatusFn = (id: string) => void;
