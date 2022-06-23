@@ -21,10 +21,6 @@ export default withTRPC<AppRouter>({
   config() {
     const url = `${getBaseUrl()}/api/trpc`;
 
-    // eslint-disable-next-line no-console
-    console.log('🚀 ~ file: _app.tsx ~ line 12 ~ config ~ process.env.VERCEL_URL', process.env.VERCEL_URL);
-    // eslint-disable-next-line no-console
-    console.log('config ~ url', url);
     return {
       url,
       transformer,
