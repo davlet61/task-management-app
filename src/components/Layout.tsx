@@ -2,8 +2,7 @@ import NavBar from '@components/NavBar';
 import Meta from '@components/Meta';
 import Footer from '@components/Footer';
 import navigationData from '@lib/navigation';
-import { useMyPresence } from '@liveblocks/react';
-import { Presence } from 'types';
+import { useUpdateMyPresence } from '@liveblocks/react';
 import Tabbar from './Tab';
 import UserCursor from './UserCursor';
 
@@ -20,7 +19,7 @@ const Layout = ({
   keywords,
   description,
 }: LayoutProps) => {
-  const [{ cursor }, updateMyPresence] = useMyPresence<Presence>();
+  const updateMyPresence = useUpdateMyPresence();
   return (
     <>
       <Meta title={title} keywords={keywords} description={description} />
@@ -44,7 +43,7 @@ const Layout = ({
       >
         {children}
       </main>
-      <UserCursor cursor={cursor} />
+      <UserCursor />
       <Footer />
     </>
   );

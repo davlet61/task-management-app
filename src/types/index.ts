@@ -34,3 +34,8 @@ export interface ICursor {
 export type Presence = {
   cursor: ICursor | null;
 };
+
+export interface VisibilityProps {
+  visibility: boolean;
+  setVisibility: (visibility: boolean) => void;
+}

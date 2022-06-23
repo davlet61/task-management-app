@@ -1,10 +1,6 @@
 import { useOthers } from '@liveblocks/react';
-import { ICursor, Presence } from 'types';
+import { Presence } from 'types';
 import Cursor from './Cursor';
-
-interface IUserCursorProps {
-  cursor: ICursor | null;
-}
 
 const COLORS = [
   '#E57373',
@@ -17,16 +13,11 @@ const COLORS = [
   '#7986CB',
 ];
 
-const UserCursor = ({ cursor }: IUserCursorProps) => {
+const UserCursor = () => {
   const others = useOthers<Presence>();
 
   return (
     <>
-      <div className="max-w-sm text-center">
-        {cursor
-          ? `${cursor.x} × ${cursor.y}`
-          : 'Move your cursor to broadcast its position to other people in the room.'}
-      </div>
       {
         others.map(({ connectionId, presence }) => {
           if (presence == null || presence.cursor == null) {

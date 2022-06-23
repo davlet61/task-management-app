@@ -64,7 +64,7 @@ const Account = ({ session }: IAccountProps) => {
       const { error } = await supabase
         .from('profiles')
         .upsert(updates, {
-          returning: 'minimal', // Don't return the value after inserting
+          returning: 'minimal',
         });
 
       if (error) {
@@ -80,7 +80,7 @@ const Account = ({ session }: IAccountProps) => {
   };
 
   return (
-    <div className="form-widget">
+    <div>
       <div>
         <label htmlFor="email">
           Email
@@ -125,7 +125,7 @@ const Account = ({ session }: IAccountProps) => {
       </div>
 
       <div>
-        <button type="button" className="button block" onClick={() => supabase.auth.signOut()}>
+        <button type="button" onClick={() => supabase.auth.signOut()}>
           Sign Out
         </button>
       </div>

@@ -1,10 +1,6 @@
 import { VisibilityContext } from 'context';
 import { useContext } from 'react';
-
-interface VisibilityProps {
-  visibility: boolean;
-  setVisibility: (visibility: boolean) => void;
-}
+import { VisibilityProps } from 'types';
 
 const useVisibility = () => {
   const [visibility, setVisibility] = useContext(VisibilityContext);

@@ -2,6 +2,7 @@ import useClickOutside from '@hooks/useClickOutside';
 import { inferQueryOutput, trpc } from '@utils/trpc';
 import { useRef, useState } from 'react';
 import { useRouter } from 'next/router';
+import useVisibility from '@hooks/useVisibility';
 import { DeleteButton, EditButton, LinkButton } from './SVGs';
 
 type Project = inferQueryOutput<'project.all'>[number];
@@ -11,6 +12,7 @@ interface IProjectItemProps {
 }
 
 const ProjectItem = ({ project }: IProjectItemProps) => {
+  const { setVisibility } = useVisibility();
   const [projectName, setProjectName] = useState(project.name);
   const [editing, setEditing] = useState(false);
   const listRef = useRef<HTMLLIElement | null>(null);
@@ -74,6 +76,7 @@ const ProjectItem = ({ project }: IProjectItemProps) => {
 
   const handleRoute = () => {
     router.push(`/projects/${project.id}`);
+    setVisibility(false);
   };
 
   return (
