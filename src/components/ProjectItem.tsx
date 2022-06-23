@@ -71,12 +71,21 @@ const ProjectItem = ({ project }: IProjectItemProps) => {
   };
 
   return (
-    <li ref={listRef} className="relative flex flex-1 h-full p-2 gap-4 bg-slate-400 border-2 rounded hover:cursor-move" draggable>
+    <li
+      ref={listRef}
+      className="relative flex p-2 gap-4 bg-slate-600 border-2 rounded hover:cursor-move"
+      draggable={!editing}
+    >
       <textarea
+        id="textarea"
         ref={inputRef}
         name="project-name"
-        className="w-full h-auto px-2 py-1 text-base text-white bg-transparent text-center resize-none select-auto overflow-hidden focus:outline-none "
+        className="w-full h-auto px-2 py-1 text-base text-white bg-transparent text-center resize-none select-auto overflow-hidden focus:outline-none caret-orange-500"
         value={projectName}
+        onFocus={(e) => {
+          e.currentTarget.selectionStart = e.currentTarget.value.length;
+          setEditing(true);
+        }}
         onChange={(e) => {
           const newName = e.currentTarget.value;
           setProjectName(newName);
@@ -91,7 +100,7 @@ const ProjectItem = ({ project }: IProjectItemProps) => {
           setEditing(false);
         }}
       />
-      <div className="flex flex-col justify-center items-center gap-1">
+      <div className="flex flex-col justify-center items-center gap-1.5">
         <EditButton edit={handleEdit} />
         <DeleteButton click={handleDelete} />
       </div>
