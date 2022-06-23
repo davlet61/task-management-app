@@ -3,14 +3,21 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { NavigationType } from '@lib/navigation';
 import { Routes } from 'types';
-import { CollectionItems } from './SVGs';
+import { CollectionItems, UserSolid } from './SVGs';
 
 interface INavbarProps {
   navigationData: NavigationType;
 }
 
 const Navbar = ({ navigationData }: INavbarProps) => {
-  const { pathname } = useRouter();
+  const { pathname, push, query } = useRouter();
+
+  const matchRoute = (route: Routes) => pathname === route.path || route.id === query.id;
+
+  const handleClick = () => {
+    push('/profile');
+  };
+
   return (
     <nav className="navbar">
       <NextLink href="/">
@@ -18,24 +25,20 @@ const Navbar = ({ navigationData }: INavbarProps) => {
           <CollectionItems />
         </span>
       </NextLink>
-      <ul className="navItems">
+      <ul className="nav-items">
         {navigationData.map((route: Routes) => (
-
           <li
             key={uuid()}
-            className={`navItem ${pathname === route.path && 'selectedNavItem'}`}
+            className={`nav-item ${matchRoute(route) && 'selected-nav-item'}`}
           >
-            <NextLink
-              href={route.path}
-              passHref
-            >
+            <NextLink href={route.path}>
               {route.title}
             </NextLink>
           </li>
 
         ))}
       </ul>
-      <button type="button" className="actions">Logout</button>
+      <UserSolid w={8} h={8} click={handleClick} />
     </nav>
   );
 };

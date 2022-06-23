@@ -25,7 +25,7 @@ const Tabbar = ({ navigationData }: ITabbarProps) => {
       case 'Inbox':
         return <InboxInSolid />;
       case 'Profile':
-        return <UserSolid />;
+        return <UserSolid w={5} h={5} />;
 
       default:
         return <HomeFilled />;
@@ -40,11 +40,11 @@ const Tabbar = ({ navigationData }: ITabbarProps) => {
   };
 
   return (
-    <nav className="tabbar z-20">
+    <nav className="tab-bar z-20">
       {navigationData.map((route: Routes) => (
         <li
           key={uuid()}
-          className={`tabItem ${pathname === route.title && 'tabItemActive'}`}
+          className={`tab-item ${pathname === route.title && 'tab-itemActive'}`}
         >
           <div
             role="link"
@@ -61,7 +61,7 @@ const Tabbar = ({ navigationData }: ITabbarProps) => {
           </div>
         </li>
       ))}
-      <li className="tabItem">
+      <li className="tab-item">
         <button aria-label="button" type="button" className="icon" onClick={() => setVisibility(!visibility)}><MenuButton /></button>
       </li>
     </nav>

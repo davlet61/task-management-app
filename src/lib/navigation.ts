@@ -2,14 +2,12 @@ const navigation = [
   {
     title: 'Home',
     path: '/',
-  },
-  {
-    title: 'Profile',
-    path: '/profile',
+    id: '',
   },
   {
     title: 'Inbox',
     path: '/projects/1ce88c26-9e9a-44ea-b5e2-9ea6f8f1fb07',
+    id: '1ce88c26-9e9a-44ea-b5e2-9ea6f8f1fb07',
   },
 ];
 
