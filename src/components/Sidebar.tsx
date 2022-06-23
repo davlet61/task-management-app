@@ -14,13 +14,13 @@ const Sidebar = () => {
   }
 
   return (
-    <aside className="w-60 h-full shadow-md bg-white p-1 flex flex-col items-center justify-start fixed">
+    <aside className="w-60 h-full shadow-md bg-neutral-50 p-1 flex flex-col items-center justify-start fixed">
       <ul className="relative mt-4">
         <li className="relative">
           <AddProject />
         </li>
         <li
-          className="relative mt-4 flex gap-2 items-center text-slate-700"
+          className="relative mt-4 flex gap-2 px-4 py-1 rounded items-center text-slate-700 hover:bg-neutral-200 transition-all duration-300 ease-in-out cursor-pointer"
         >
           <Inbox />
           <p>{singleProject.data.name}</p>

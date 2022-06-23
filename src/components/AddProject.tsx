@@ -49,7 +49,7 @@ const AddProject = () => {
   return (
     <details
       ref={detailsRef}
-      className="flex flex-col items-center text-sm py-4 px-6 h-16 overflow-hidden cursor-pointer text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-gray-900 hover:bg-gray-100 transition-all duration-300 ease-in-out open:h-40"
+      className="flex flex-col items-center text-sm py-4 px-6 h-16 overflow-hidden cursor-pointer text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-gray-900 hover:bg-neutral-200 transition-all duration-300 ease-in-out open:h-40"
     >
       <summary className="list-plus text-red-600 text-[1rem]">Add Project</summary>
       <form

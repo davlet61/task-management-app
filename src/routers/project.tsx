@@ -18,6 +18,19 @@ const projectRouter = createRouter()
       return projects;
     },
   })
+  .query('ids', {
+    async resolve({ ctx }) {
+      const projects = await ctx.projects.findMany({
+        orderBy: {
+          created_at: 'asc',
+        },
+        select: {
+          id: true,
+        },
+      });
+      return projects;
+    },
+  })
   .query('single', {
     input: z.object({
       id: z.string(),
