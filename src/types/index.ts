@@ -1,20 +1,11 @@
 import { inferQueryOutput } from '@utils/trpc';
 
-export interface Project {
-  id: string;
-  user_id: string;
-  name: string;
-  todos: Task[];
+export interface Params {
+  [key: string]: string;
 }
-export type IProject = inferQueryOutput<'project.all'>[number];
 
-export interface Task {
-  id: string;
-  title: string;
-  project_id: string;
-  description?: string;
-  completed?: boolean;
-}
+export type Project = inferQueryOutput<'project.all'>[number];
+export type Task = inferQueryOutput<'todo.all'>[number];
 
 export type Store = {
   todos: Task[];

@@ -34,8 +34,8 @@ const AddProject = () => {
     const user = supabase.auth.user() as User;
     addNewProject
       .mutate({
-        user_id: user.id,
-        name: newProject.name,
+        user_id: user.id ?? '',
+        name: newProject.name ?? '',
       });
     store.addProject();
   };
@@ -59,7 +59,7 @@ const AddProject = () => {
         data-testid="add-project-inner"
       >
         <input
-          value={newProject.name}
+          value={newProject.name ?? ''}
           onChange={(e) => store.setNewProject({ ...newProject, name: e.target.value })}
           className=":placeholder-gray-500 p-2 w-11/12 outline-none border-2 border-solid border-gray-400 rounded"
           data-testid="project-name"

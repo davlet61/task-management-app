@@ -1,22 +1,27 @@
-import type { GetStaticPaths, GetStaticPropsContext } from 'next';
+import type { GetStaticPaths, GetStaticPropsContext, NextPage } from 'next';
 import AddTodo from '@components/AddTodo';
 import Sidebar from '@components/Sidebar';
 import TodoList from '@components/TodoList';
 import { appRouter } from '@pages/api/trpc/[trpc]';
 import { createSSGHelpers } from '@trpc/react/ssg';
 import { createContext } from '@utils/context';
-import { inferQueryOutput } from '@utils/trpc';
+import { Params, Project } from 'types';
 
-type Project = inferQueryOutput<'project.all'>[number];
+interface IProjectProps {
+  projects: Project[];
+}
+const Projects: NextPage<IProjectProps> = ({ projects }) => {
+  // eslint-disable-next-line no-console
+  console.log('projects', projects);
 
-const Projects = ({ projects }: { projects: Project[] }) => (
-  <main>
-    <Sidebar />
-    <AddTodo />
-    <TodoList />
-    <p>{JSON.stringify(projects)}</p>
-  </main>
-);
+  return (
+    <main>
+      <Sidebar />
+      <AddTodo />
+      <TodoList />
+    </main>
+  );
+};
 
 export default Projects;
 
@@ -28,7 +33,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const allIds = await ssg.fetchQuery('project.ids');
 
   return {
-    paths: allIds.map((p) => ({
+    paths: allIds.map((p: Params) => ({
       params: { id: p.id },
     })),
 

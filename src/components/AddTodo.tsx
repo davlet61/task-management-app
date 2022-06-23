@@ -39,8 +39,8 @@ const AddTodo = () => {
     e.preventDefault();
     addTask.mutate({
       project_id: newTodo.project_id,
-      title: newTodo.title,
-      description: newTodo.description,
+      title: newTodo.title ?? '',
+      description: newTodo.description ?? '',
     });
     store.addTodo();
   };
@@ -57,7 +57,7 @@ const AddTodo = () => {
               type="text"
               name="title"
               placeholder="Task title ..."
-              value={newTodo.title}
+              value={newTodo.title ?? ''}
               onChange={handleChange}
               required
             />
@@ -68,7 +68,7 @@ const AddTodo = () => {
               id="add-description"
               name="description"
               placeholder="Short description of the task"
-              value={newTodo.description}
+              value={newTodo.description ?? ''}
               onChange={handleChange}
             />
           </label>
