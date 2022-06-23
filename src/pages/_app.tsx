@@ -26,5 +26,5 @@ export default withTRPC<AppRouter>({
       transformer,
     };
   },
-  ssr: true,
+  ssr: false,
 })(MyApp);
