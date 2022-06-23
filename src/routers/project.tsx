@@ -18,6 +18,17 @@ const projectRouter = createRouter()
       return projects;
     },
   })
+  .query('single', {
+    input: z.object({
+      id: z.string(),
+    }),
+    async resolve({ ctx, input }) {
+      const singleProject = await ctx.projects.findUnique({
+        where: { id: input.id },
+      });
+      return singleProject;
+    },
+  })
   .mutation('add', {
     input: z.object({
       user_id: z.string(),

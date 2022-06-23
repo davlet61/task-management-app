@@ -1,5 +1,4 @@
 import create from 'zustand';
-import { v4 as uuid } from 'uuid';
 import { Project, Store, Task } from '../types';
 
 const updateTodo = (todos: Task[], todo: Task): Task[] => todos
@@ -16,8 +15,6 @@ const addTodo = (todos: Task[], todo: Task): Task[] => [
   ...todos,
   {
     ...todo,
-    id: uuid(),
-    completed: false,
   },
 ];
 
@@ -31,6 +28,7 @@ const addProject = (projects: Project[], project: Project): Project[] => [
 const initialState: Task = {
   id: '',
   title: '',
+  project_id: '1ce88c26-9e9a-44ea-b5e2-9ea6f8f1fb07',
   description: '',
   completed: false,
 };

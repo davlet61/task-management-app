@@ -8,6 +8,7 @@ export interface Project {
 export interface Task {
   id: string;
   title: string;
+  project_id: string;
   description?: string;
   completed?: boolean;
 }

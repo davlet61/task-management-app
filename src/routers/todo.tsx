@@ -13,7 +13,6 @@ const todoRouter = createRouter()
           title: true,
           project_id: true,
           description: true,
-          created_at: true,
           completed: true,
         },
       });

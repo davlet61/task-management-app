@@ -15,7 +15,7 @@ const TodoList = () => {
   }
 
   return (
-    <section id="todoList" className="todo-wrapper">
+    <section id="todoList" className="flex flex-col ">
       {todos.map((todo) => <TodoItem key={todo.id} todo={todo} />)}
     </section>
   );

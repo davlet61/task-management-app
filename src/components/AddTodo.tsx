@@ -1,11 +1,34 @@
 import useStore from '@store/.';
 import { trpc } from '@utils/trpc';
+import { v4 as uuid } from 'uuid';
 import { HandleChangeFn, HandleSubmitFn } from '../types';
 
 const AddTodo = () => {
   const store = useStore((state) => state);
   const { newTodo } = store;
   const allTodos = trpc.useQuery(['todo.all']);
+
+  const utils = trpc.useContext();
+  const addTask = trpc.useMutation('todo.add', {
+    async onMutate({ project_id, title, description }) {
+      await utils.cancelQuery(['todo.all']);
+      const tasks = allTodos.data ?? [];
+      utils.setQueryData(
+        ['todo.all'],
+        [
+          ...tasks,
+          {
+            id: uuid(),
+            project_id,
+            title,
+            description: description ?? '',
+            completed: false,
+          },
+
+        ],
+      );
+    },
+  });
 
   const handleChange: HandleChangeFn = (e) => {
     const { value, name } = e.target;
@@ -14,6 +37,11 @@ const AddTodo = () => {
 
   const handleSubmit: HandleSubmitFn = (e) => {
     e.preventDefault();
+    addTask.mutate({
+      project_id: newTodo.project_id,
+      title: newTodo.title,
+      description: newTodo.description,
+    });
     store.addTodo();
   };
 
