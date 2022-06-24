@@ -1,25 +1,27 @@
 import useClickOutside from '@hooks/useClickOutside';
 import { trpc } from '@utils/trpc';
-import { useState, useRef, useEffect } from 'react';
-import { Task } from 'types';
-import { DeleteButton } from './SVGs';
+import React, {
+  useState, useRef, useEffect, useMemo,
+} from 'react';
+import { HandleChangeFn, Task } from 'types';
+import { DeleteButton, EditButton } from './SVGs';
 
 const ListItem = ({ todo }: { todo: Task }) => {
   const [editing, setEditing] = useState(false);
   const wrapperRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const utils = trpc.useContext();
-  const [text, setText] = useState(todo.title || '');
-  const [completed, setCompleted] = useState(todo.completed);
-
-  const classNames = (...classes: string[]) => classes.filter(Boolean).join(' ');
+  const initialState = useMemo(() => ({
+    title: todo.title || '',
+    description: todo.description || '',
+    completed: todo.completed || false,
+  }), [todo]);
+  const [newTodo, setNewTodo] = useState(initialState);
 
   useEffect(() => {
-    setText(todo.title || '');
-  }, [todo.title]);
-  useEffect(() => {
-    setCompleted(todo.completed);
-  }, [todo.completed]);
+    setNewTodo(initialState);
+  }, [initialState]);
 
   const editTodo = trpc.useMutation('todo.edit', {
     async onMutate({ id, data }) {
@@ -53,10 +55,27 @@ const ListItem = ({ todo }: { todo: Task }) => {
     },
   });
 
-  const handleContentEdit = (e: React.KeyboardEvent | React.MouseEvent): void => {
-    if (e.type !== 'mousedown' || (e as React.KeyboardEvent).key !== ' ') {
-      setEditing(true);
+  const handleChange: HandleChangeFn = (e) => {
+    setEditing(true);
+    const { value, name } = e.target;
+    setNewTodo({ ...newTodo, [name]: value });
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      const element = e.target as HTMLInputElement;
+      element.blur();
+      editTodo.mutate({
+        id: todo.id,
+        data: { title: newTodo.title, description: newTodo.description },
+      });
+      setEditing(false);
     }
+  };
+
+  const handleEdit = () => {
+    setEditing(true);
+    inputRef.current?.focus();
   };
 
   useClickOutside({
@@ -65,7 +84,7 @@ const ListItem = ({ todo }: { todo: Task }) => {
     callback() {
       editTodo.mutate({
         id: todo.id,
-        data: { title: text },
+        data: { title: newTodo.title, description: newTodo.description },
       });
       setEditing(false);
     },
@@ -74,33 +93,40 @@ const ListItem = ({ todo }: { todo: Task }) => {
     <li
       key={todo.id}
       ref={wrapperRef}
-      className="flex items-center justify-between gap-1 mx-60"
+      className="flex items-center justify-between gap-1 max-w-xs mx-auto"
     >
-
       <input
         id="checkbox"
         type="checkbox"
         checked={todo.completed || false}
         onChange={(e) => {
           const { checked } = e.currentTarget;
-          setCompleted(checked);
+          setNewTodo({ ...newTodo, completed: checked });
           editTodo.mutate({
             id: todo.id,
             data: { completed: checked },
           });
         }}
       />
-      <div
-        role="button"
-        tabIndex={0}
-        contentEditable={editing}
-        onClick={handleContentEdit}
-        onKeyDown={handleContentEdit}
-      >
-        <p>{todo.title}</p>
-        <p>{todo.description}</p>
-      </div>
+      <form className="flex flex-col flex-wrap">
+        <input
+          ref={inputRef}
+          type="text"
+          name="title"
+          value={newTodo.title}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+        />
+        <input
+          type="text"
+          name="description"
+          value={newTodo.description}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+        />
+      </form>
       <DeleteButton click={() => deleteTodo.mutate(todo.id)} />
+      <EditButton click={handleEdit} editing={editing} />
     </li>
   );
 };

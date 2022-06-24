@@ -63,7 +63,7 @@ const todoRouter = createRouter()
       id: z.string().uuid(),
       data: z.object({
         title: z.string().min(1).optional(),
-        description: z.string().min(3).optional(),
+        description: z.string().optional(),
         completed: z.boolean().optional(),
       }),
     }),
