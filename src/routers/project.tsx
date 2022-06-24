@@ -38,6 +38,12 @@ const projectRouter = createRouter()
     async resolve({ ctx, input }) {
       const singleProject = await ctx.projects.findUnique({
         where: { id: input.id },
+        select: {
+          id: true,
+          name: true,
+          user_id: true,
+          todos: true,
+        },
       });
       return singleProject;
     },

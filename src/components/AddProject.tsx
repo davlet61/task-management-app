@@ -33,7 +33,7 @@ const AddProject = () => {
     const user = supabase.auth.user();
     addNewProject
       .mutate({
-        user_id: user?.id || newProject.user_id,
+        user_id: user?.id || newProject.user_id || '',
         name: newProject.name ?? '',
       });
     store.addProject();
