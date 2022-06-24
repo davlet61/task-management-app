@@ -7,11 +7,12 @@ import { DeleteButton } from './SVGs';
 const ListItem = ({ todo }: { todo: Task }) => {
   const [editing, setEditing] = useState(false);
   const wrapperRef = useRef(null);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const utils = trpc.useContext();
   const [text, setText] = useState(todo.title || '');
   const [completed, setCompleted] = useState(todo.completed);
+
+  const classNames = (...classes: string[]) => classes.filter(Boolean).join(' ');
 
   useEffect(() => {
     setText(todo.title || '');
@@ -52,6 +53,12 @@ const ListItem = ({ todo }: { todo: Task }) => {
     },
   });
 
+  const handleContentEdit = (e: React.KeyboardEvent | React.MouseEvent): void => {
+    if (e.type !== 'mousedown' || (e as React.KeyboardEvent).key !== ' ') {
+      setEditing(true);
+    }
+  };
+
   useClickOutside({
     ref: wrapperRef,
     enabled: editing,
@@ -67,50 +74,32 @@ const ListItem = ({ todo }: { todo: Task }) => {
     <li
       key={todo.id}
       ref={wrapperRef}
+      className="flex items-center justify-between gap-1 mx-60"
     >
-      <div className="view">
-        <label
-          htmlFor="checkbox"
-          onDoubleClick={(e) => {
-            setEditing(true);
-            e.currentTarget.focus();
-          }}
-        >
-          <input
-            id="checkbox"
-            type="checkbox"
-            checked={todo.completed || false}
-            onChange={(e) => {
-              const { checked } = e.currentTarget;
-              setCompleted(checked);
-              editTodo.mutate({
-                id: todo.id,
-                data: { completed: checked },
-              });
-            }}
-            autoFocus={editing}
-          />
-          {text}
-        </label>
-      </div>
+
       <input
-        className="edit"
-        value={text}
-        ref={inputRef}
+        id="checkbox"
+        type="checkbox"
+        checked={todo.completed || false}
         onChange={(e) => {
-          const newText = e.currentTarget.value;
-          setText(newText);
-        }}
-        onKeyPress={(e) => {
-          if (e.key === 'Enter') {
-            editTodo.mutate({
-              id: todo.id,
-              data: { title: text },
-            });
-            setEditing(false);
-          }
+          const { checked } = e.currentTarget;
+          setCompleted(checked);
+          editTodo.mutate({
+            id: todo.id,
+            data: { completed: checked },
+          });
         }}
       />
+      <div
+        role="button"
+        tabIndex={0}
+        contentEditable={editing}
+        onClick={handleContentEdit}
+        onKeyDown={handleContentEdit}
+      >
+        <p>{todo.title}</p>
+        <p>{todo.description}</p>
+      </div>
       <DeleteButton click={() => deleteTodo.mutate(todo.id)} />
     </li>
   );

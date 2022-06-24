@@ -64,6 +64,7 @@ const todoRouter = createRouter()
       data: z.object({
         title: z.string().min(1).optional(),
         description: z.string().min(3).optional(),
+        completed: z.boolean().optional(),
       }),
     }),
     async resolve({ ctx, input }) {
