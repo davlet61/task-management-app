@@ -1,5 +1,5 @@
 import { Task } from 'types';
-import TodoItem from './TodoItem';
+import TodoItem from './__TodoItem';
 
 interface ITodoListProps {
   tasks: Task[];

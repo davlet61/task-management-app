@@ -5,7 +5,7 @@ import { useIsMutating } from 'react-query';
 import { v4 as uuid } from 'uuid';
 import useStore from '@store/.';
 import { HandleChangeFn, HandleSubmitFn } from 'types';
-import ListItem from './Item';
+import TodoItem from './TodoItem';
 
 const Todos = ({ id }: { id: string }) => {
   const store = useStore((state) => state);
@@ -107,9 +107,9 @@ const Todos = ({ id }: { id: string }) => {
           Mark all as complete
           <input id="toggle-all" className="toggle-all" type="checkbox" />
         </label>
-        <ul className="todo-list">
+        <ul className="flex flex-col items-center justify-center gap-3">
           {filteredTodos?.map((task) => (
-            <ListItem key={task.id} todo={task} />
+            <TodoItem key={task.id} todo={task} />
           ))}
         </ul>
       </section>
