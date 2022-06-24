@@ -29,6 +29,7 @@ const Todos = ({ id }: { id: string }) => {
             completed: false,
             title,
             description: '',
+            created_at: new Date(),
           },
         ],
       );

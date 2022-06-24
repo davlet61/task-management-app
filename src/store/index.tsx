@@ -31,6 +31,7 @@ const initialState: Task = {
   project_id: '1ce88c26-9e9a-44ea-b5e2-9ea6f8f1fb07',
   description: '',
   completed: false,
+  created_at: new Date(),
 };
 
 const initialProject: Project = {

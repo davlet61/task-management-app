@@ -23,6 +23,7 @@ const AddTodo = () => {
             title,
             description: description ?? '',
             completed: false,
+            created_at: new Date(),
           },
 
         ],
@@ -39,7 +40,7 @@ const AddTodo = () => {
     e.preventDefault();
     addTask.mutate({
       project_id: newTodo.project_id,
-      title: newTodo.title ?? '',
+      title: newTodo.title,
       description: newTodo.description ?? '',
     });
     store.addTodo();

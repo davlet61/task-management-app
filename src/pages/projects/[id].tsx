@@ -5,6 +5,7 @@ import { createSSGHelpers } from '@trpc/react/ssg';
 import { createContext } from '@utils/context';
 import { Params } from 'types';
 import Todos from '@components/Todos';
+import { transformer } from '@utils/trpc';
 
 interface IProjectProps {
   id: string;
@@ -39,6 +40,7 @@ export const getStaticProps = async (
 ) => {
   const ssg = createSSGHelpers({
     router: appRouter,
+    transformer,
     ctx: await createContext(),
   });
 

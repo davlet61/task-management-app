@@ -13,7 +13,7 @@ const TodoItem = ({ todo }: { todo: Task }) => {
 
   const utils = trpc.useContext();
   const initialState = useMemo(() => ({
-    title: todo.title || '',
+    title: todo.title,
     description: todo.description || '',
     completed: todo.completed,
   }), [todo]);
@@ -97,6 +97,7 @@ const TodoItem = ({ todo }: { todo: Task }) => {
       ref={wrapperRef}
       className="flex items-center justify-between gap-1 max-w-sm mx-auto p-4 border rounded-md bg-neutral-100 shadow"
     >
+
       <label htmlFor="checkbox" className="relative mb-5 cursor-pointer text-lg">
         <input
           id="checkbox"
