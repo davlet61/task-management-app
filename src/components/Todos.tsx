@@ -7,7 +7,7 @@ import useStore from '@store/.';
 import { HandleChangeFn, HandleSubmitFn } from 'types';
 import TodoItem from './TodoItem';
 
-const Todos = ({ id }: { id: string }) => {
+const Todos = ({ id }: { id?: string }) => {
   const store = useStore((state) => state);
   const allTodos = trpc.useQuery(['todo.all'], {
     staleTime: 3000,
@@ -55,7 +55,7 @@ const Todos = ({ id }: { id: string }) => {
   const handleSubmit: HandleSubmitFn = (e) => {
     e.preventDefault();
     addTask.mutate({
-      project_id: id,
+      project_id: id || '1ce88c26-9e9a-44ea-b5e2-9ea6f8f1fb07',
       title: store.newTodo.title ?? '',
       description: store.newTodo.description ?? '',
     });
@@ -168,3 +168,7 @@ const Todos = ({ id }: { id: string }) => {
 };
 
 export default Todos;
+
+Todos.defaultProps = {
+  id: '1ce88c26-9e9a-44ea-b5e2-9ea6f8f1fb07',
+};

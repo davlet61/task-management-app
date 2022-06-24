@@ -1,8 +1,8 @@
 import useClickOutside from '@hooks/useClickOutside';
 import { inferQueryOutput, trpc } from '@utils/trpc';
 import { useRef, useState } from 'react';
-import NextLink from 'next/link';
-import { DeleteButton, EditButton } from './SVGs';
+import { useRouter } from 'next/router';
+import { DeleteButton, EditButton, LinkButton } from './SVGs';
 
 type Project = inferQueryOutput<'project.all'>[number];
 
@@ -16,6 +16,7 @@ const ProjectItem = ({ project }: IProjectItemProps) => {
   const listRef = useRef<HTMLLIElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const utils = trpc.useContext();
+  const router = useRouter();
 
   const editProject = trpc.useMutation('project.edit', {
     async onMutate({ id, data }) {
@@ -67,47 +68,50 @@ const ProjectItem = ({ project }: IProjectItemProps) => {
   };
 
   const handleEdit = () => {
-    setEditing(true);
-    inputRef.current?.focus();
+    setEditing((prev) => !prev);
+    editing ? inputRef.current?.blur() : inputRef.current?.focus();
+  };
+
+  const handleRoute = () => {
+    router.push(`/projects/${project.id}`);
   };
 
   return (
-    <NextLink href="/projects/[id]" as={`/projects/${project.id}`}>
-      <li
-        ref={listRef}
-        className="relative flex p-2 gap-4 bg-slate-600 border-2 rounded hover:cursor-move"
-        draggable={!editing}
-      >
-        <input
-          id="textarea"
-          ref={inputRef}
-          name="project-name"
-          className="w-full h-auto px-2 py-1 text-sm text-white bg-transparent text-center focus:outline-none caret-orange-500"
-          value={projectName}
-          onFocus={(e) => {
-            e.currentTarget.selectionStart = e.currentTarget.value.length;
-            setEditing(true);
-          }}
-          onChange={(e) => {
-            const newName = e.currentTarget.value;
-            setProjectName(newName);
-          }}
-          onKeyPress={(e) => {
-            if (e.key === 'Enter') {
-              editProject.mutate({
-                id: project.id,
-                data: { name: projectName },
-              });
-            }
-            setEditing(false);
-          }}
-        />
-        <div className="flex flex-col justify-center items-center gap-1.5">
-          <EditButton click={handleEdit} />
-          <DeleteButton click={handleDelete} />
-        </div>
-      </li>
-    </NextLink>
+    <li
+      ref={listRef}
+      className="relative flex p-2 gap-4 bg-slate-600 border-2 rounded hover:cursor-move"
+      draggable={!editing}
+    >
+      <LinkButton click={handleRoute} />
+      <input
+        id="textarea"
+        ref={inputRef}
+        name="project-name"
+        className="w-full h-auto px-2 py-1 text-sm text-white bg-transparent text-center focus:outline-none caret-orange-500"
+        value={projectName}
+        onFocus={(e) => {
+          e.currentTarget.selectionStart = e.currentTarget.value.length;
+          setEditing(true);
+        }}
+        onChange={(e) => {
+          const newName = e.currentTarget.value;
+          setProjectName(newName);
+        }}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            editProject.mutate({
+              id: project.id,
+              data: { name: projectName },
+            });
+          }
+          setEditing(false);
+        }}
+      />
+      <div className="flex flex-col justify-center items-center gap-1.5">
+        <EditButton click={handleEdit} editing={editing} home />
+        <DeleteButton click={handleDelete} />
+      </div>
+    </li>
   );
 };
 export default ProjectItem;
