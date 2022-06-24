@@ -17,7 +17,7 @@ const Sidebar = () => {
   const filteredProjects = projects.data?.filter((p: Project) => p.name !== 'Inbox');
 
   return (
-    <aside className="w-64 h-full shadow-md bg-neutral-50 p-1 flex flex-col items-center justify-start fixed overflow-auto">
+    <aside className="w-[100vw] z-10 sm:w-80 h-full shadow-md bg-neutral-50 p-1 flex flex-col items-center justify-start fixed overflow-auto">
       <ul className="relative mt-4">
         <li className="relative">
           <AddProject />

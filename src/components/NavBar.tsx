@@ -1,10 +1,12 @@
 import { v4 as uuid } from 'uuid';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
+import { NavigationType } from '@lib/navigation';
+import { Routes } from 'types';
 import { CollectionItems } from './SVGs';
 
 interface INavbarProps {
-  navigationData: string[];
+  navigationData: NavigationType;
 }
 
 const Navbar = ({ navigationData }: INavbarProps) => {
@@ -17,17 +19,17 @@ const Navbar = ({ navigationData }: INavbarProps) => {
         </span>
       </NextLink>
       <ul className="navItems">
-        {navigationData.map((item: string) => (
+        {navigationData.map((route: Routes) => (
 
           <li
             key={uuid()}
-            className={`navItem ${pathname === item && 'selectedNavItem'}`}
+            className={`navItem ${pathname === route.path && 'selectedNavItem'}`}
           >
             <NextLink
-              href={`/${item}`}
+              href={route.path}
               passHref
             >
-              {item}
+              {route.title}
             </NextLink>
           </li>
 

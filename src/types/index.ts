@@ -4,6 +4,10 @@ export interface Params {
   [key: string]: string;
 }
 
+export interface Routes {
+  [key: string]: string;
+}
+
 export type Project = inferQueryOutput<'project.all'>[number];
 export type Task = inferQueryOutput<'todo.all'>[number];
 
