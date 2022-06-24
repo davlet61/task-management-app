@@ -7,15 +7,17 @@ import { Inbox } from './SVGs';
 
 const Sidebar = () => {
   const projects = trpc.useQuery(['project.all']);
-  const singleProject = trpc.useQuery(['project.single', { id: 'ee331808-b953-45df-87a3-822450197a47' }], {
+  const singleProject = trpc.useQuery(['project.single', { id: '1ce88c26-9e9a-44ea-b5e2-9ea6f8f1fb07' }], {
     staleTime: 30000,
   });
   if (!projects.data || !singleProject.data) {
     return null;
   }
 
+  const filteredProjects = projects.data?.filter((p: Project) => p.name !== 'Inbox');
+
   return (
-    <aside className="w-60 h-full shadow-md bg-neutral-50 p-1 flex flex-col items-center justify-start fixed overflow-auto">
+    <aside className="w-64 h-full shadow-md bg-neutral-50 p-1 flex flex-col items-center justify-start fixed overflow-auto">
       <ul className="relative mt-4">
         <li className="relative">
           <AddProject />
@@ -29,7 +31,7 @@ const Sidebar = () => {
       </ul>
       <hr className="h-0.5 w-2/3 mx-auto my-4 bg-gray-400 rounded" />
       <ul className="relative px-6 py-2 flex flex-col h-full gap-2">
-        {projects.data.length > 0 && projects.data
+        {filteredProjects.length > 0 && filteredProjects
           .map((p: Project) => <ProjectItem key={uuid()} project={p} />)}
       </ul>
     </aside>

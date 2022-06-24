@@ -11,10 +11,10 @@ interface IProjectItemProps {
 }
 
 const ProjectItem = ({ project }: IProjectItemProps) => {
-  const [projectName, setProjectName] = useState(project.name || '');
+  const [projectName, setProjectName] = useState(project.name);
   const [editing, setEditing] = useState(false);
   const listRef = useRef<HTMLLIElement | null>(null);
-  const inputRef = useRef<HTMLTextAreaElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const utils = trpc.useContext();
 
   const editProject = trpc.useMutation('project.edit', {
@@ -78,11 +78,11 @@ const ProjectItem = ({ project }: IProjectItemProps) => {
         className="relative flex p-2 gap-4 bg-slate-600 border-2 rounded hover:cursor-move"
         draggable={!editing}
       >
-        <textarea
+        <input
           id="textarea"
           ref={inputRef}
           name="project-name"
-          className="w-full h-auto px-2 py-1 text-base text-white bg-transparent text-center resize-none select-auto overflow-hidden focus:outline-none caret-orange-500"
+          className="w-full h-auto px-2 py-1 text-sm text-white bg-transparent text-center focus:outline-none caret-orange-500"
           value={projectName}
           onFocus={(e) => {
             e.currentTarget.selectionStart = e.currentTarget.value.length;
