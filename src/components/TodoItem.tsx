@@ -94,9 +94,10 @@ const TodoItem = ({ todo }: { todo: Task }) => {
   });
   return (
     <li
+      draggable
       key={todo.id}
       ref={wrapperRef}
-      className={`flex items-center justify-between gap-1 max-w-sm mx-auto p-4 border rounded-md shadow transition-all duration-300 ease-in-out ${listClasses} `}
+      className={`flex items-center justify-between gap-1 cursor-move max-w-sm mx-auto p-4 border rounded-md shadow transition-all duration-300 ease-in-out ${listClasses} `}
     >
 
       <label htmlFor={`${todo.id}-checkbox`} className="relative mb-5 cursor-pointer text-lg">

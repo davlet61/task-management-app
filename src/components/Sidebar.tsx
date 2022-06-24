@@ -23,7 +23,7 @@ const Sidebar = () => {
           <AddProject />
         </li>
         <li
-          className="relative mt-4 flex gap-2 px-4 py-1 rounded items-center text-slate-700 hover:bg-neutral-200 transition-all duration-300 ease-in-out cursor-pointer"
+          className="relative mt-4 flex gap-2 px-4 py-1 rounded items-center text-slate-700 hover:bg-neutral-200 transition-all duration-300 ease-in-out cursor-pointer active:bg-neutral-300"
         >
           <Inbox />
           <p>{singleProject.data.name}</p>

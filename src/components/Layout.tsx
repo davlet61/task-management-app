@@ -1,7 +1,6 @@
 import NavBar from '@components/NavBar';
 import Meta from '@components/Meta';
 import Footer from '@components/Footer';
-import useNavigation from '@hooks/useNavigation';
 import navigationData from '@lib/navigation';
 import Tabbar from './Tab';
 
@@ -17,27 +16,19 @@ const Layout = ({
   title,
   keywords,
   description,
-}: LayoutProps) => {
-  const { currentRoute, setCurrentRoute } = useNavigation();
-
-  return (
-    <>
-      <Meta title={title} keywords={keywords} description={description} />
-      <NavBar
-        navigationData={navigationData}
-        currentRoute={currentRoute}
-        setCurrentRoute={setCurrentRoute}
-      />
-      <Tabbar
-        navigationData={navigationData}
-        currentRoute={currentRoute}
-        setCurrentRoute={setCurrentRoute}
-      />
-      {children}
-      <Footer />
-    </>
-  );
-};
+}: LayoutProps) => (
+  <>
+    <Meta title={title} keywords={keywords} description={description} />
+    <NavBar
+      navigationData={navigationData}
+    />
+    <Tabbar
+      navigationData={navigationData}
+    />
+    {children}
+    <Footer />
+  </>
+);
 
 export default Layout;
 

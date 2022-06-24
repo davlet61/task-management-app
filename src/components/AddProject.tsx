@@ -52,7 +52,7 @@ const AddProject = () => {
     >
       <summary className="list-plus text-red-600 text-[1rem]">Add Project</summary>
       <form
-        className="flex flex-col items-center gap-2 mt-4 text-sm h-auto text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-gray-900 hover:bg-gray-100 transition duration-300 ease-in-out"
+        className="flex flex-col items-center gap-2 mt-4 text-sm h-auto text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-gray-900 transition duration-300 ease-in-out"
         data-mdb-ripple="true"
         data-mdb-ripple-color="dark"
         data-testid="add-project-inner"
@@ -61,7 +61,6 @@ const AddProject = () => {
           value={newProject.name ?? ''}
           onChange={(e) => store.setNewProject({ ...newProject, name: e.target.value })}
           className=":placeholder-gray-500 p-2 w-11/12 outline-none border-2 border-solid border-gray-400 rounded"
-          data-testid="project-name"
           type="text"
           placeholder="Name your project"
         />

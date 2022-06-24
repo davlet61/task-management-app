@@ -30,7 +30,7 @@
 /* NAVIGATION */
 
 .navbar {
-  @apply hidden md:flex flex-row items-center justify-between px-8 h-20 rounded-b-3xl bg-red-500;
+  @apply hidden md:flex flex-row items-center justify-between px-8 h-20 rounded-b-3xl bg-red-400;
 }
 
 .logo {
@@ -56,7 +56,7 @@
 /* TAB */
 
 .tabbar {
-  @apply flex md:hidden flex-row items-center justify-around px-8 h-20 bg-red-500 visible md:invisible fixed bottom-0 w-full rounded-t-3xl text-2xl;
+  @apply flex md:hidden flex-row items-center justify-around px-8 h-20 bg-red-400 visible md:invisible fixed bottom-0 w-full rounded-t-3xl text-2xl;
 }
 
 .tabItem {

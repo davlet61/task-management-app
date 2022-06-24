@@ -7,6 +7,7 @@ import useStore from '@store/.';
 import { HandleChangeFn, HandleSubmitFn } from 'types';
 import { useRouter } from 'next/router';
 import TodoItem from './TodoItem';
+import { Broom } from './SVGs';
 
 const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
   const [toggleAll, setToggleAll] = useState(false);
@@ -193,12 +194,13 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
           {allTodos.data?.some((task) => task.completed) && (
             <button
               type="button"
-              className="clear-completed"
+              className="flex justify-center items-center gap-2 p-4 my-2 rounded-md bg-red-700 mx-auto hover:bg-neutral-400 active:bg-slate-500 active:text-white active:translate-y-1 active:shadow-none transition-all duration-300 ease-in-out shadow-md"
               onClick={() => {
                 clearCompleted.mutate();
               }}
             >
-              Clear completed
+              <span className="text-lg font-semibold text-white uppercase">Clear Completed</span>
+              <Broom />
             </button>
           )}
         </footer>
