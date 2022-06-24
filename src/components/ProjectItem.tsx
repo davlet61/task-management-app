@@ -108,7 +108,7 @@ const ProjectItem = ({ project }: IProjectItemProps) => {
         }}
       />
       <div className="flex flex-col justify-center items-center gap-1.5">
-        <EditButton click={handleEdit} editing={editing} home />
+        <EditButton click={handleEdit} editing={editing} sidebar />
         <DeleteButton click={handleDelete} />
       </div>
     </li>

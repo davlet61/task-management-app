@@ -20,10 +20,10 @@ const Projects = (props: InferGetServerSidePropsType<typeof getServerSideProps>)
 
 export default Projects;
 
-export async function getServerSideProps(
+export const getServerSideProps = async (
   context: GetServerSidePropsContext<{ id: string }>,
-) {
-  const ssg = await createSSGHelpers({
+) => {
+  const ssg = createSSGHelpers({
     router: appRouter,
     ctx: await createContext(),
     transformer,
@@ -38,7 +38,7 @@ export async function getServerSideProps(
       id,
     },
   };
-}
+};
 
 // export const getStaticPaths: GetStaticPaths = async () => {
 //   const ssg = createSSGHelpers({

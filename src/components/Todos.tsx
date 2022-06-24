@@ -7,13 +7,13 @@ import useStore from '@store/.';
 import { HandleChangeFn, HandleSubmitFn } from 'types';
 import TodoItem from './TodoItem';
 
-const Todos = ({ id }: { id?: string }) => {
+const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
   const store = useStore((state) => state);
   const allTodos = trpc.useQuery(['todo.all'], {
     staleTime: 3000,
   });
 
-  const filteredTodos = allTodos?.data?.filter((t) => t.project_id === id);
+  const filteredTodos = allTodos.data?.filter((t) => t.project_id === id);
   const utils = trpc.useContext();
   const addTask = trpc.useMutation('todo.add', {
     async onMutate({ title, project_id }) {
@@ -47,6 +47,8 @@ const Todos = ({ id }: { id?: string }) => {
     },
   });
 
+  const inputClasses = 'py-1 px-2 mx-2 rounded border border-solid border-neutral-300 shadow-inner focus:outline focus:outline-slate-400 focus:shadow-outline';
+
   const handleChange: HandleChangeFn = (e) => {
     const { value, name } = e.target;
     store.setNewTodo({ ...store.newTodo, [name]: value });
@@ -69,49 +71,51 @@ const Todos = ({ id }: { id?: string }) => {
     }
   }, [number, utils]);
   return (
-    <section className="ml-80">
-      <header className="header">
-        <form onSubmit={handleSubmit}>
-          <fieldset className="flex flex-wrap">
-            <legend className="mx-auto">Add a new task</legend>
-            <label htmlFor="txtTodoItemToAdd">
-              Title
-              <input
-                id="txtTodoItemToAdd"
-                type="text"
-                name="title"
-                placeholder="Task title ..."
-                value={store.newTodo.title || ''}
-                onChange={handleChange}
-                required
-              />
-            </label>
-            <label htmlFor="add-description">
-              Description
-              <input
-                id="add-description"
-                name="description"
-                placeholder="Short description of the task"
-                value={store.newTodo.description || ''}
-                onChange={handleChange}
-              />
-            </label>
-            <button id="btnAddTodo" className="btn-black" type="submit">
-              Add
-            </button>
-          </fieldset>
-        </form>
-      </header>
-      {/* This section should be hidden by default and shown when there are todos */}
-      <section className="main">
+    <section className="ml-80 flex flex-col justify-center items-center focus:out">
+      <form onSubmit={handleSubmit}>
+        <fieldset className="flex flex-wrap">
+          <legend className="w-full p-4 border-0 text-center border-b-2 border-solid border-neutral-400 mb-8 mt-4">Add a new task</legend>
+          <input
+            id="txtTodoItemToAdd"
+            type="text"
+            name="title"
+            className={`${inputClasses}`}
+            placeholder="Task title ..."
+            value={store.newTodo.title || ''}
+            onChange={handleChange}
+            required
+          />
+          <input
+            id="add-description"
+            name="description"
+            className={`${inputClasses}`}
+            placeholder="Short description of the task"
+            value={store.newTodo.description || ''}
+            onChange={handleChange}
+          />
+          <button id="btnAddTodo" className="btn-black" type="submit">
+            Add
+          </button>
+        </fieldset>
+      </form>
+      <section className="flex p-6 flex-col gap-2">
         <label htmlFor="toggle-all">
+          <input id="toggle-all" className="mx-2" type="checkbox" />
           Mark all as complete
-          <input id="toggle-all" className="toggle-all" type="checkbox" />
         </label>
         <ul className="flex flex-col items-center justify-center gap-3">
-          {filteredTodos?.map((task) => (
-            <TodoItem key={task.id} todo={task} />
-          ))}
+          {filteredTodos?.filter((task) => {
+            if (filter === 'todo') {
+              return !task.completed;
+            }
+            if (filter === 'done') {
+              return task.completed;
+            }
+            return true;
+          })
+            .map((task) => (
+              <TodoItem key={task.id} todo={task} />
+            ))}
         </ul>
       </section>
       {/* This footer should be hidden by default and shown when there are todos */}
@@ -171,4 +175,5 @@ export default Todos;
 
 Todos.defaultProps = {
   id: '1ce88c26-9e9a-44ea-b5e2-9ea6f8f1fb07',
+  filter: 'all',
 };

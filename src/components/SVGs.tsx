@@ -2,11 +2,11 @@ import { HandleClick } from 'types';
 
 interface IEditButtonProps {
   click: HandleClick;
-  home?: boolean;
+  sidebar?: boolean;
   editing?: boolean;
 }
 
-export const EditButton = ({ click, editing, home }: IEditButtonProps) => (
+export const EditButton = ({ click, editing, sidebar }: IEditButtonProps) => (
   <button
     type="button"
     onClick={click}
@@ -17,7 +17,7 @@ export const EditButton = ({ click, editing, home }: IEditButtonProps) => (
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
     ) : (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke={`${home ? '#FDE047' : '#FEF08A'}`} strokeWidth="2">
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke={`${sidebar ? '#FEF08A' : '#0284C7'}`} strokeWidth="2">
         <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
       </svg>
     )}
@@ -52,5 +52,5 @@ export const LinkButton = ({ click }: { click: HandleClick; }) => (
 
 EditButton.defaultProps = {
   editing: false,
-  home: false,
+  sidebar: false,
 };
