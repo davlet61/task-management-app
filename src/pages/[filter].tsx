@@ -7,14 +7,17 @@ import { createSSGHelpers } from '@trpc/react/ssg';
 import { createContext } from '@utils/context';
 import Todos from '@components/Todos';
 import { transformer } from '@utils/trpc';
+import Layout from '@components/Layout';
 
 const Projects = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { filter } = props;
   return (
-    <main>
-      <Sidebar />
-      <Todos filter={filter} />
-    </main>
+    <Layout>
+      <main>
+        <Sidebar />
+        <Todos filter={filter} />
+      </main>
+    </Layout>
   );
 };
 

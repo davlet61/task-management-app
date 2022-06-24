@@ -7,14 +7,17 @@ import { createSSGHelpers } from '@trpc/react/ssg';
 import { createContext } from '@utils/context';
 import Todos from '@components/Todos';
 import { transformer } from '@utils/trpc';
+import Layout from '@components/Layout';
 
 const Projects = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { id } = props;
   return (
-    <main>
-      <Sidebar />
-      <Todos id={id} />
-    </main>
+    <Layout>
+      <main>
+        <Sidebar />
+        <Todos id={id} />
+      </main>
+    </Layout>
   );
 };
 
@@ -39,39 +42,3 @@ export const getServerSideProps = async (
     },
   };
 };
-
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const ssg = createSSGHelpers({
-//     router: appRouter,
-//     ctx: await createContext(),
-//   });
-//   const allIds = await ssg.fetchQuery('project.ids');
-
-//   return {
-//     paths: allIds.map((p: Params) => ({
-//       params: { id: p.id },
-//     })),
-
-//     fallback: false,
-//   };
-// };
-
-// export const getStaticProps = async (
-//   context: GetStaticPropsContext<{ id: string }>,
-// ) => {
-//   const ssg = createSSGHelpers({
-//     router: appRouter,
-//     transformer,
-//     ctx: await createContext(),
-//   });
-
-//   await ssg.fetchQuery('project.ids');
-
-//   return {
-//     props: {
-//       trpcState: ssg.dehydrate(),
-//       id: context.params?.id ?? '',
-//     },
-//     revalidate: 1,
-//   };
-// };
