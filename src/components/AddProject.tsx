@@ -1,13 +1,18 @@
 import supabase from '@lib/supabaseConfig';
-import useStore from '@store/.';
 import { v4 as uuid } from 'uuid';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { trpc } from '@utils/trpc';
+import { Project } from 'types';
 
 const AddProject = () => {
   const detailsRef = useRef<HTMLDetailsElement | null>(null);
-  const store = useStore((state) => state);
-  const { newProject } = store;
+  const initialProject: Project = {
+    id: '',
+    user_id: '311eb43d-d131-4d97-8588-87db10048ca3',
+    name: '',
+    todos: [],
+  };
+  const [newProject, setNewProject] = useState(initialProject);
   const allProjects = trpc.useQuery(['project.all']);
 
   const utils = trpc.useContext();
@@ -33,10 +38,10 @@ const AddProject = () => {
     const user = supabase.auth.user();
     addNewProject
       .mutate({
-        user_id: user?.id || newProject.user_id || '',
-        name: newProject.name ?? '',
+        user_id: user?.id || newProject.user_id as string,
+        name: newProject.name,
       });
-    store.addProject();
+    setNewProject(initialProject);
   };
 
   const handleCancel = (e: React.KeyboardEvent | React.MouseEvent) => {
@@ -59,7 +64,7 @@ const AddProject = () => {
       >
         <input
           value={newProject.name ?? ''}
-          onChange={(e) => store.setNewProject({ ...newProject, name: e.target.value })}
+          onChange={(e) => setNewProject({ ...newProject, name: e.target.value })}
           className=":placeholder-gray-500 p-2 w-11/12 outline-none border-2 border-solid border-gray-400 rounded"
           type="text"
           placeholder="Name your project"

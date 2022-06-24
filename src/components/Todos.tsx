@@ -3,15 +3,22 @@ import NextLink from 'next/link';
 import { useEffect, useState } from 'react';
 import { useIsMutating } from 'react-query';
 import { v4 as uuid } from 'uuid';
-import useStore from '@store/.';
-import { HandleChangeFn, HandleSubmitFn } from 'types';
+import { HandleChangeFn, HandleSubmitFn, Task } from 'types';
 import { useRouter } from 'next/router';
 import TodoItem from './TodoItem';
 import { Broom } from './SVGs';
 
 const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
+  const initialState: Task = {
+    id: '',
+    title: '',
+    project_id: '1ce88c26-9e9a-44ea-b5e2-9ea6f8f1fb07',
+    description: '',
+    completed: false,
+    created_at: new Date(),
+  };
   const [toggleAll, setToggleAll] = useState(false);
-  const store = useStore((state) => state);
+  const [newTask, setNewTask] = useState(initialState);
   const router = useRouter();
   const allTodos = trpc.useQuery(['todo.all'], {
     staleTime: 3000,
@@ -74,17 +81,17 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
 
   const handleChange: HandleChangeFn = (e) => {
     const { value, name } = e.target;
-    store.setNewTodo({ ...store.newTodo, [name]: value });
+    setNewTask({ ...newTask, [name]: value });
   };
 
   const handleSubmit: HandleSubmitFn = (e) => {
     e.preventDefault();
     addTask.mutate({
       project_id: id || '1ce88c26-9e9a-44ea-b5e2-9ea6f8f1fb07',
-      title: store.newTodo.title ?? '',
-      description: store.newTodo.description ?? '',
+      title: newTask.title,
+      description: newTask.description ?? '',
     });
-    store.addTodo();
+    setNewTask(initialState);
   };
 
   const number = useIsMutating();
@@ -104,7 +111,7 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
             name="title"
             className={`${inputClasses}`}
             placeholder="Task title ..."
-            value={store.newTodo.title || ''}
+            value={newTask.title}
             onChange={handleChange}
             required
           />
@@ -113,7 +120,7 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
             name="description"
             className={`${inputClasses}`}
             placeholder="Short description of the task"
-            value={store.newTodo.description || ''}
+            value={newTask.description || ''}
             onChange={handleChange}
           />
           <button id="btnAddTodo" className="btn-black" type="submit">
@@ -177,16 +184,16 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
               </NextLink>
             </li>
             <li>
-              <NextLink href="/active" passHref>
+              <NextLink href="/todo" passHref>
                 <a className={hrefClasses} href="dummy">
-                  Active
+                  Todo
                 </a>
               </NextLink>
             </li>
             <li>
-              <NextLink href="/completed" passHref>
+              <NextLink href="/done" passHref>
                 <a className={hrefClasses} href="dummy">
-                  Completed
+                  Done
                 </a>
               </NextLink>
             </li>

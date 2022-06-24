@@ -1,11 +1,10 @@
-import { ReactNode } from 'react';
-import useStore from '@store/.';
+import { ReactNode, useState } from 'react';
 
 const Popup = ({ children }: { children: ReactNode }) => {
-  const { visibility, setVisibility } = useStore((state) => state);
+  const [visibility, setVisibility] = useState(false);
 
   const handleClearStorage = () => {
-    setVisibility();
+    setVisibility(true);
     localStorage.clear();
   };
 
