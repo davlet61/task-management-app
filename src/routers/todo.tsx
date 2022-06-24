@@ -81,6 +81,12 @@ const todoRouter = createRouter()
       await ctx.todos.delete({ where: { id } });
       return id;
     },
+  })
+  .mutation('clear-completed', {
+    async resolve({ ctx }) {
+      await ctx.todos.deleteMany({ where: { completed: true } });
+      return ctx.todos.findMany();
+    },
   });
 
 export default todoRouter;

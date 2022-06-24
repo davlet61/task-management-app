@@ -2,32 +2,34 @@ import useClickOutside from '@hooks/useClickOutside';
 import { trpc } from '@utils/trpc';
 import { useState, useRef, useEffect } from 'react';
 import { Task } from 'types';
+import { DeleteButton } from './SVGs';
 
-const ListItem = ({ task }: { task: Task }) => {
+const ListItem = ({ todo }: { todo: Task }) => {
   const [editing, setEditing] = useState(false);
   const wrapperRef = useRef(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const utils = trpc.useContext();
-  const [text, setText] = useState(task.title || '');
-  const [completed, setCompleted] = useState(task.completed);
-  useEffect(() => {
-    setText(task.title || '');
-  }, [task.title]);
-  useEffect(() => {
-    setCompleted(task.completed);
-  }, [task.completed]);
+  const [text, setText] = useState(todo.title || '');
+  const [completed, setCompleted] = useState(todo.completed);
 
-  const editTask = trpc.useMutation('todo.edit', {
+  useEffect(() => {
+    setText(todo.title || '');
+  }, [todo.title]);
+  useEffect(() => {
+    setCompleted(todo.completed);
+  }, [todo.completed]);
+
+  const editTodo = trpc.useMutation('todo.edit', {
     async onMutate({ id, data }) {
       await utils.cancelQuery(['todo.all']);
-      const allTasks = utils.getQueryData(['todo.all']);
-      if (!allTasks) {
+      const allTodos = utils.getQueryData(['todo.all']);
+      if (!allTodos) {
         return;
       }
       utils.setQueryData(
         ['todo.all'],
-        allTasks.map((t) => (t.id === id
+        allTodos.map((t) => (t.id === id
           ? {
             ...t,
             ...data,
@@ -36,16 +38,16 @@ const ListItem = ({ task }: { task: Task }) => {
       );
     },
   });
-  const deleteTask = trpc.useMutation('todo.delete', {
+  const deleteTodo = trpc.useMutation('todo.delete', {
     async onMutate() {
       await utils.cancelQuery(['todo.all']);
-      const allTasks = utils.getQueryData(['todo.all']);
-      if (!allTasks) {
+      const allTodos = utils.getQueryData(['todo.all']);
+      if (!allTodos) {
         return;
       }
       utils.setQueryData(
         ['todo.all'],
-        allTasks.filter((t) => t.id !== task.id),
+        allTodos.filter((t) => t.id !== todo.id),
       );
     },
   });
@@ -54,8 +56,8 @@ const ListItem = ({ task }: { task: Task }) => {
     ref: wrapperRef,
     enabled: editing,
     callback() {
-      editTask.mutate({
-        id: task.id,
+      editTodo.mutate({
+        id: todo.id,
         data: { title: text },
       });
       setEditing(false);
@@ -63,38 +65,33 @@ const ListItem = ({ task }: { task: Task }) => {
   });
   return (
     <li
-      key={task.id}
+      key={todo.id}
       ref={wrapperRef}
     >
       <div className="view">
-        <input
-          className="toggle"
-          type="checkbox"
-          checked={task.completed}
-          onChange={(e) => {
-            const { checked } = e.currentTarget;
-            setCompleted(checked);
-            editTask.mutate({
-              id: task.id,
-              data: { completed: checked },
-            });
-          }}
-          autoFocus={editing}
-        />
         <label
+          htmlFor="checkbox"
           onDoubleClick={(e) => {
             setEditing(true);
             e.currentTarget.focus();
           }}
         >
+          <input
+            id="checkbox"
+            type="checkbox"
+            checked={todo.completed || false}
+            onChange={(e) => {
+              const { checked } = e.currentTarget;
+              setCompleted(checked);
+              editTodo.mutate({
+                id: todo.id,
+                data: { completed: checked },
+              });
+            }}
+            autoFocus={editing}
+          />
           {text}
         </label>
-        <button
-          className="destroy"
-          onClick={() => {
-            deleteTask.mutate(task.id);
-          }}
-        />
       </div>
       <input
         className="edit"
@@ -106,14 +103,15 @@ const ListItem = ({ task }: { task: Task }) => {
         }}
         onKeyPress={(e) => {
           if (e.key === 'Enter') {
-            editTask.mutate({
-              id: task.id,
+            editTodo.mutate({
+              id: todo.id,
               data: { title: text },
             });
             setEditing(false);
           }
         }}
       />
+      <DeleteButton click={() => deleteTodo.mutate(todo.id)} />
     </li>
   );
 };
