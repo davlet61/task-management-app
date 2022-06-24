@@ -184,16 +184,16 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
               </NextLink>
             </li>
             <li>
-              <NextLink href="/active" passHref>
+              <NextLink href="/todo" passHref>
                 <a className={hrefClasses} href="dummy">
-                  Active
+                  Todo
                 </a>
               </NextLink>
             </li>
             <li>
-              <NextLink href="/completed" passHref>
+              <NextLink href="/done" passHref>
                 <a className={hrefClasses} href="dummy">
-                  Completed
+                  Done
                 </a>
               </NextLink>
             </li>
