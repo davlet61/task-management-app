@@ -20,6 +20,7 @@ const TodoItem = ({ todo }: { todo: Task }) => {
   const [newTodo, setNewTodo] = useState(initialState);
 
   const inputClasses = 'focus:outline-none focus:italic focus:text-sky-700 bg-transparent';
+  const listClasses = newTodo.completed ? 'bg-gray-400 opacity-60 border-2 border-solid border-gray-500 italic' : 'bg-neutral-100';
 
   useEffect(() => {
     setNewTodo(initialState);
@@ -95,12 +96,12 @@ const TodoItem = ({ todo }: { todo: Task }) => {
     <li
       key={todo.id}
       ref={wrapperRef}
-      className="flex items-center justify-between gap-1 max-w-sm mx-auto p-4 border rounded-md bg-neutral-100 shadow"
+      className={`flex items-center justify-between gap-1 max-w-sm mx-auto p-4 border rounded-md shadow transition-all duration-300 ease-in-out ${listClasses} `}
     >
 
-      <label htmlFor="checkbox" className="relative mb-5 cursor-pointer text-lg">
+      <label htmlFor={`${todo.id}-checkbox`} className="relative mb-5 cursor-pointer text-lg">
         <input
-          id="checkbox"
+          id={`${todo.id}-checkbox`}
           type="checkbox"
           className="checkbox-hide peer"
           checked={todo.completed}
@@ -135,8 +136,8 @@ const TodoItem = ({ todo }: { todo: Task }) => {
           onKeyDown={handleKeyDown}
         />
       </form>
-      <DeleteButton click={() => deleteTodo.mutate(todo.id)} />
       <EditButton click={handleEdit} editing={editing} />
+      <DeleteButton click={() => deleteTodo.mutate(todo.id)} />
     </li>
   );
 };
