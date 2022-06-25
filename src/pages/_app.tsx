@@ -1,12 +1,15 @@
 import { withTRPC } from '@trpc/next';
 import { AppType } from 'next/dist/shared/lib/utils';
 import type { AppRouter } from '@pages/api/trpc/[trpc]';
+import { ClickToComponent } from 'click-to-react-component';
 import { transformer } from '@utils/trpc';
 import { VisibilityProvider } from 'context';
 import '../styles/globals.css';
 
 const MyApp: AppType = ({ Component, pageProps }) => (
+
   <VisibilityProvider>
+    <ClickToComponent />
     <Component {...pageProps} />
   </VisibilityProvider>
 );

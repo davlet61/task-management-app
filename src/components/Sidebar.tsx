@@ -16,7 +16,7 @@ const Sidebar = () => {
     return null;
   }
 
-  const visible = `${visibility ? 'translate-x-full' : 'translate-x-0'}`;
+  const visible = `${visibility ? 'translate-x-full' : '-translate-x-0'}`;
 
   const filteredProjects = projects.data?.filter((p: Project) => p.name !== 'Inbox');
 
