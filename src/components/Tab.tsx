@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 import { Routes } from 'types';
 import { NavigationType } from '@lib/navigation';
 import useVisibility from '@hooks/useVisibility';
-
 import {
   MenuButton, HomeFilled, InboxInSolid, UserSolid,
 } from './SVGs';
