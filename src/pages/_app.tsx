@@ -2,9 +2,14 @@ import { withTRPC } from '@trpc/next';
 import { AppType } from 'next/dist/shared/lib/utils';
 import type { AppRouter } from '@pages/api/trpc/[trpc]';
 import { transformer } from '@utils/trpc';
+import { VisibilityProvider } from 'context';
 import '../styles/globals.css';
 
-const MyApp: AppType = ({ Component, pageProps }) => <Component {...pageProps} />;
+const MyApp: AppType = ({ Component, pageProps }) => (
+  <VisibilityProvider>
+    <Component {...pageProps} />
+  </VisibilityProvider>
+);
 
 const getBaseUrl = () => {
   if (typeof window !== 'undefined') {

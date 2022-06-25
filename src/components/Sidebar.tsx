@@ -1,3 +1,4 @@
+import useVisibility from '@hooks/useVisibility';
 import { trpc } from '@utils/trpc';
 import { Project } from 'types';
 import { v4 as uuid } from 'uuid';
@@ -6,6 +7,7 @@ import ProjectItem from './ProjectItem';
 import { Inbox } from './SVGs';
 
 const Sidebar = () => {
+  const { visibility } = useVisibility();
   const projects = trpc.useQuery(['project.all']);
   const singleProject = trpc.useQuery(['project.single', { id: '1ce88c26-9e9a-44ea-b5e2-9ea6f8f1fb07' }], {
     staleTime: 30000,
@@ -14,10 +16,12 @@ const Sidebar = () => {
     return null;
   }
 
+  const visible = `${visibility ? 'visible' : 'hidden'}`;
+
   const filteredProjects = projects.data?.filter((p: Project) => p.name !== 'Inbox');
 
   return (
-    <aside className="w-[100vw] z-10 sm:w-80 h-full shadow-md bg-neutral-50 p-1 flex flex-col items-center justify-start fixed overflow-auto">
+    <aside className={`${visible} w-[100vw] z-10 sm:w-80 h-full shadow-md bg-neutral-50 p-1 flex flex-col items-center justify-start fixed overflow-auto`}>
       <ul className="relative mt-4">
         <li className="relative">
           <AddProject />

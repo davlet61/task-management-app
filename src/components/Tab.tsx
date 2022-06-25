@@ -5,8 +5,9 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { Routes } from 'types';
 import { NavigationType } from '@lib/navigation';
+import useVisibility from '@hooks/useVisibility';
 import {
-  HomeFilled, InboxInSolid, UserSolid,
+  MenuButton, HomeFilled, InboxInSolid, UserSolid,
 } from './SVGs';
 
 interface ITabbarProps {
@@ -14,6 +15,7 @@ interface ITabbarProps {
 }
 
 const Tabbar = ({ navigationData }: ITabbarProps) => {
+  const { visibility, setVisibility } = useVisibility();
   const { pathname } = useRouter();
 
   const getTabIcon = useCallback((title: string) => {
@@ -42,6 +44,11 @@ const Tabbar = ({ navigationData }: ITabbarProps) => {
           </NextLink>
         </li>
       ))}
+      <li
+        className="tabItem"
+      >
+        <button aria-label="button" type="button" className="icon" onClick={() => setVisibility(!visibility)}><MenuButton /></button>
+      </li>
     </nav>
   );
 };
