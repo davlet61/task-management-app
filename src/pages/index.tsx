@@ -5,7 +5,7 @@ import Layout from '@components/Layout';
 
 const Home: NextPage = () => (
   <Layout>
-    <main>
+    <main className="h-[calc(100vh-5rem)]">
       <Sidebar />
       <Todos />
     </main>
