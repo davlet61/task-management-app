@@ -101,10 +101,10 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
     }
   }, [number, utils]);
   return (
-    <section className="ml-80 flex flex-col justify-center items-center focus:out">
+    <>
       <form onSubmit={handleSubmit}>
-        <fieldset className="flex flex-wrap">
-          <legend className="w-full p-4 border-0 text-center border-b-2 border-solid border-neutral-400 mb-8 mt-4">Add a new task</legend>
+        <fieldset className="flex flex-col items-center justify-center gap-2 md:flex-row md:ml-80">
+          <legend className="w-full p-6 border-0 text-center border-b-2 border-solid border-neutral-400 mb-8 bg-neutral-200 font-bold">Add a new task</legend>
           <input
             id="txtTodoItemToAdd"
             type="text"
@@ -212,7 +212,7 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
           )}
         </footer>
       )}
-    </section>
+    </>
   );
 };
 
