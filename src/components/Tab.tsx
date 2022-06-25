@@ -5,8 +5,10 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { Routes } from 'types';
 import { NavigationType } from '@lib/navigation';
+import useVisibility from '@hooks/useVisibility';
+
 import {
-  HomeFilled, InboxInSolid, UserSolid,
+  MenuButton, HomeFilled, InboxInSolid, UserSolid,
 } from './SVGs';
 
 interface ITabbarProps {
@@ -14,6 +16,7 @@ interface ITabbarProps {
 }
 
 const Tabbar = ({ navigationData }: ITabbarProps) => {
+  const { visibility, setVisibility } = useVisibility();
   const { pathname } = useRouter();
 
   const getTabIcon = useCallback((title: string) => {
@@ -30,6 +33,13 @@ const Tabbar = ({ navigationData }: ITabbarProps) => {
     }
   }, []);
 
+  const handleClickOrEnter = (e: React.KeyboardEvent | React.MouseEvent) => {
+    if (e.type === 'click' || (e as React.KeyboardEvent).key === 'Enter') {
+      setVisibility(false);
+    }
+    setVisibility(true);
+  };
+
   return (
     <nav className="tabbar z-20">
       {navigationData.map((route: Routes) => (
@@ -37,11 +47,24 @@ const Tabbar = ({ navigationData }: ITabbarProps) => {
           key={uuid()}
           className={`tabItem ${pathname === route.title && 'tabItemActive'}`}
         >
-          <NextLink href={route.path} passHref>
-            <span className="icon">{getTabIcon(route.title)}</span>
-          </NextLink>
+          <div
+            role="link"
+            tabIndex={0}
+            onClick={handleClickOrEnter}
+            onKeyDown={handleClickOrEnter}
+          >
+            <NextLink
+              href={route.path}
+              passHref
+            >
+              <span className="icon">{getTabIcon(route.title)}</span>
+            </NextLink>
+          </div>
         </li>
       ))}
+      <li className="tabItem">
+        <button aria-label="button" type="button" className="icon" onClick={() => setVisibility(!visibility)}><MenuButton /></button>
+      </li>
     </nav>
   );
 };

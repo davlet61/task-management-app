@@ -97,7 +97,7 @@ const TodoItem = ({ todo }: { todo: Task }) => {
       draggable
       key={todo.id}
       ref={wrapperRef}
-      className={`flex items-center justify-between gap-1 cursor-move max-w-sm mx-auto p-4 border rounded-md shadow transition-all duration-300 ease-in-out ${listClasses} `}
+      className={`flex items-center justify-center gap-1 cursor-move p-2 md:p-4 border rounded-md shadow transition-all duration-300 ease-in-out ${listClasses} `}
     >
 
       <label htmlFor={`${todo.id}-checkbox`} className="relative mb-5 cursor-pointer text-lg">
@@ -118,7 +118,7 @@ const TodoItem = ({ todo }: { todo: Task }) => {
         <span className="absolute top-0 left-0 h-6 w-6 bg-white border border-solid border-neutral-300 shadow-inner rounded-2xl hover:bg-neutral-200 peer-checked:bg-green-700  peer-checked:after:block " />
       </label>
 
-      <form className="flex flex-col flex-wrap ml-8">
+      <form className="flex flex-col justify-center ml-8 w-[50vw]">
         <input
           ref={inputRef}
           type="text"
@@ -131,7 +131,7 @@ const TodoItem = ({ todo }: { todo: Task }) => {
         <input
           type="text"
           name="description"
-          className={`${inputClasses} text-sm`}
+          className={`${inputClasses} text-sm break-words`}
           value={newTodo.description}
           onChange={handleChange}
           onKeyDown={handleKeyDown}

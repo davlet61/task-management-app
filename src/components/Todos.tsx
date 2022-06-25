@@ -101,12 +101,12 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
     }
   }, [number, utils]);
   return (
-    <section className="ml-80 flex flex-col justify-center items-center focus:out">
+    <>
       <form onSubmit={handleSubmit}>
-        <fieldset className="flex flex-wrap">
-          <legend className="w-full p-4 border-0 text-center border-b-2 border-solid border-neutral-400 mb-8 mt-4">Add a new task</legend>
+        <fieldset className="flex flex-col items-center justify-center gap-2 md:flex-row md:ml-80">
+          <legend className="w-full p-6 border-0 text-center border-b-2 border-solid border-neutral-400 mb-8 bg-neutral-200 font-bold">Add a new task</legend>
           <input
-            id="txtTodoItemToAdd"
+            id="add-title"
             type="text"
             name="title"
             className={`${inputClasses}`}
@@ -129,7 +129,7 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
         </fieldset>
       </form>
       {filteredTodos && filteredTodos.length > 0 && (
-        <section className="flex p-6 flex-col gap-2">
+        <section className="flex p-1 flex-col gap-2 overflow-hidden items-center justify-center mx-4">
           <label htmlFor="toggle-all">
             <input
               id="toggle-all"
@@ -148,7 +148,7 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
             />
             Mark all as complete
           </label>
-          <ul className="flex flex-col items-center justify-center gap-3">
+          <ul className="flex flex-col items-center justify-center gap-3 md:ml-80">
             {filteredTodos?.filter((task) => {
               if (filter === 'todo') {
                 return !task.completed;
@@ -165,7 +165,7 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
         </section>
       )}
       {filteredTodos && filteredTodos.length > 0 && (
-        <footer className="flex flex-col gap-4">
+        <footer className="flex flex-col items-center justify-center gap-4 md:ml-80">
           <span className="uppercase mx-auto text-lg">
             <strong>
               {filteredTodos?.reduce(
@@ -175,25 +175,46 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
             </strong>
             &nbsp; item left
           </span>
-          <ul className="flex gap-4 items-center justify-center">
+          <ul className="flex flex-col gap-4 md:flex-row items-center justify-center">
             <li>
               <NextLink href="/all" passHref>
                 <a className={hrefClasses} href="dummy">
-                  All
+                  All&nbsp;
+                  <span className="font-semibold">
+                    (
+                    {filteredTodos?.length}
+                    )
+                  </span>
                 </a>
               </NextLink>
             </li>
             <li>
               <NextLink href="/todo" passHref>
                 <a className={hrefClasses} href="dummy">
-                  Todo
+                  Todo&nbsp;
+                  <span className="text-orange-400 font-semibold">
+                    (
+                    {filteredTodos?.reduce(
+                      (sum, task) => (!task.completed ? sum + 1 : sum),
+                      0,
+                    )}
+                    )
+                  </span>
                 </a>
               </NextLink>
             </li>
             <li>
               <NextLink href="/done" passHref>
                 <a className={hrefClasses} href="dummy">
-                  Done
+                  Done&nbsp;
+                  <span className="text-green-600 font-semibold">
+                    (
+                    {filteredTodos?.reduce(
+                      (sum, task) => (task.completed ? sum + 1 : sum),
+                      0,
+                    )}
+                    )
+                  </span>
                 </a>
               </NextLink>
             </li>
@@ -201,18 +222,18 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
           {allTodos.data?.some((task) => task.completed) && (
             <button
               type="button"
-              className="flex justify-center items-center gap-2 p-4 my-2 rounded-md bg-red-700 mx-auto hover:bg-neutral-400 active:bg-slate-500 active:text-white active:translate-y-1 active:shadow-none transition-all duration-300 ease-in-out shadow-md"
+              className="flex justify-center items-center gap-2 p-3 md:p-4 my-2 rounded-md bg-red-700 mx-auto hover:bg-neutral-400 active:bg-slate-500 active:text-white active:translate-y-1 active:shadow-none transition-all duration-300 ease-in-out shadow-md"
               onClick={() => {
                 clearCompleted.mutate();
               }}
             >
-              <span className="text-lg font-semibold text-white uppercase">Clear Completed</span>
+              <span className="text-sm md:text-lg font-semibold text-white uppercase">Clear Completed</span>
               <Broom />
             </button>
           )}
         </footer>
       )}
-    </section>
+    </>
   );
 };
 
