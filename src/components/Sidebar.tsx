@@ -16,12 +16,12 @@ const Sidebar = () => {
     return null;
   }
 
-  const visible = `${visibility ? 'visible' : 'hidden'}`;
+  const visible = `${visibility ? 'translate-x-full' : 'translate-x-0'}`;
 
   const filteredProjects = projects.data?.filter((p: Project) => p.name !== 'Inbox');
 
   return (
-    <aside className={`${visible} w-[100vw] z-10 sm:w-80 h-full shadow-md bg-neutral-50 p-1 flex flex-col items-center justify-start fixed overflow-auto`}>
+    <aside className={`${visible} w-[100vw] z-10 sm:w-80 h-full shadow-md bg-neutral-50 p-1 flex flex-col items-center justify-start fixed overflow-auto transition-all duration-300 ease-in-out`}>
       <ul className="relative mt-4">
         <li className="relative">
           <AddProject />
