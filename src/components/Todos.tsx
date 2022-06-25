@@ -5,8 +5,10 @@ import { useIsMutating } from 'react-query';
 import { v4 as uuid } from 'uuid';
 import { HandleChangeFn, HandleSubmitFn, Task } from 'types';
 import { useRouter } from 'next/router';
+import { useUpdateMyPresence } from '@liveblocks/react';
 import TodoItem from './TodoItem';
 import { Broom } from './SVGs';
+import UserIsTyping from './UserIsTyping';
 
 const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
   const initialState: Task = {
@@ -19,6 +21,7 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
   };
   const [toggleAll, setToggleAll] = useState(false);
   const [newTask, setNewTask] = useState(initialState);
+  const updateMyPresence = useUpdateMyPresence();
   const router = useRouter();
   const allTodos = trpc.useQuery(['todo.all'], {
     staleTime: 3000,
@@ -82,6 +85,7 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
   const handleChange: HandleChangeFn = (e) => {
     const { value, name } = e.target;
     setNewTask({ ...newTask, [name]: value });
+    updateMyPresence({ isTyping: true });
   };
 
   const handleSubmit: HandleSubmitFn = (e) => {
@@ -92,6 +96,7 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
       description: newTask.description ?? '',
     });
     setNewTask(initialState);
+    updateMyPresence({ isTyping: false });
   };
 
   const number = useIsMutating();
@@ -100,6 +105,7 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
       utils.invalidateQueries('todo.all');
     }
   }, [number, utils]);
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -128,6 +134,7 @@ const Todos = ({ id, filter }: { id?: string, filter?: string }) => {
           </button>
         </fieldset>
       </form>
+      <UserIsTyping />
       {filteredTodos && filteredTodos.length > 0 && (
         <section className="flex p-1 flex-col gap-2 overflow-hidden items-center justify-center mx-4">
           <label htmlFor="toggle-all">

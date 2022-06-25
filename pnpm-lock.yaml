@@ -1,6 +1,8 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@liveblocks/client': ^0.16.17
+  '@liveblocks/react': ^0.16.17
   '@prisma/client': ^3.15.2
   '@supabase/supabase-js': ^1.35.3
   '@testing-library/react': ^13.3.0
@@ -42,6 +44,8 @@ specifiers:
   zod: ^3.17.3
 
 dependencies:
+  '@liveblocks/client': 0.16.17
+  '@liveblocks/react': 0.16.17_rkxvcl2pmnus5elkhkbmkkcruu
   '@prisma/client': 3.15.2_prisma@3.15.2
   '@supabase/supabase-js': 1.35.3
   '@trpc/client': 9.25.3_@trpc+server@9.25.3
@@ -467,6 +471,20 @@ packages:
       '@jridgewell/resolve-uri': 3.0.7
       '@jridgewell/sourcemap-codec': 1.4.13
     dev: true
+
+  /@liveblocks/client/0.16.17:
+    resolution: {integrity: sha512-mWX/EGQNoWwzkEdUfdt82w9OMA5kKV3BraBt2YhZO4Zn04mfNmcOkr7V4S+EmJ4LyQ5QVNKYvA4gJQU1ahn5mQ==}
+    dev: false
+
+  /@liveblocks/react/0.16.17_rkxvcl2pmnus5elkhkbmkkcruu:
+    resolution: {integrity: sha512-I0WvNI+X/I+ymbVF/+W4GOCaZnsaqje01Mp9BGt7u7joL1ZNBQuva1zWPINE6pNWTk75y/pmG4o56YoC+ek4FQ==}
+    peerDependencies:
+      '@liveblocks/client': 0.16.17
+      react: ^16.14.0 || ^17 || ^18
+    dependencies:
+      '@liveblocks/client': 0.16.17
+      react: 18.2.0
+    dev: false
 
   /@next/env/12.1.6:
     resolution: {integrity: sha512-Te/OBDXFSodPU6jlXYPAXpmZr/AkG6DCATAxttQxqOWaq6eDFX25Db3dK0120GZrSZmv4QCe9KsZmJKDbWs4OA==}
