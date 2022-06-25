@@ -1,5 +1,6 @@
 import useVisibility from '@hooks/useVisibility';
 import { trpc } from '@utils/trpc';
+import { useEffect } from 'react';
 import { Project } from 'types';
 import { v4 as uuid } from 'uuid';
 import AddProject from './AddProject';
@@ -7,7 +8,19 @@ import ProjectItem from './ProjectItem';
 import { Inbox } from './SVGs';
 
 const Sidebar = () => {
-  const { visibility } = useVisibility();
+  const { visibility, setVisibility } = useVisibility();
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768 && visibility) {
+        setVisibility(!visibility);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, [setVisibility, visibility]);
+
   const projects = trpc.useQuery(['project.all']);
   const singleProject = trpc.useQuery(['project.single', { id: '1ce88c26-9e9a-44ea-b5e2-9ea6f8f1fb07' }], {
     staleTime: 30000,
