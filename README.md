@@ -1,6 +1,6 @@
 # Task Management App
 
-[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
+[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/davlet61/task-management-app/blob/main/LICENSE)
 
 A simple application to organize tasks with possibility of having several lists.
 
