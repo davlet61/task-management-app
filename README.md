@@ -46,7 +46,7 @@ Install dependencies
 
 **_NOTE:_** The default package manager for this project is `pnpm`
 
-\*If you wish to use a different package manager make sure to **_remove_** the `preinstall` script from the `package.json`.\*
+*If you wish to use a different package manager make sure to **_remove_** the `preinstall` script from the `package.json`.*
 
 ```bash
   pnpm install
