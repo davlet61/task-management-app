@@ -19,9 +19,17 @@ A simple application to organize tasks with possibility of having several lists.
 
 ## Demo
 
-The application is deployed at the following address:
+The application is live at the following address:
 
 https://task-management-app-orcin.vercel.app/
+
+
+You can also try it on sandbox: 
+*Note: You still need Environment Variables*
+
+[![Edit elegant-cache-w5cczp](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/elegant-cache-w5cczp?fontsize=14&hidenavigation=1&theme=dark)
+
+
 
 
 ## Run Locally
