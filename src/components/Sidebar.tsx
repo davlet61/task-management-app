@@ -40,7 +40,7 @@ const Sidebar = () => {
   };
 
   // eslint-disable-next-line no-console
-  console.log(process.env.VERCEL_URL);
+  console.log(process.env.NEXT_PUBLIC_VERCEL_URL);
 
   return (
     <aside className={`${visible} w-[100vw] z-10 md:w-80 h-full shadow-md bg-neutral-50 p-1 flex flex-col items-center justify-start fixed overflow-auto transition-all duration-300 ease-in-out`}>
